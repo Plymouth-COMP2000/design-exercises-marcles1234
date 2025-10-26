@@ -1,0 +1,83 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeFragment">
+
+    <TextView
+        android:id="@+id/homeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Home"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20sp"
+        android:textSize="30sp"/>
+
+    <TextView
+        android:id="@+id/infoText1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/textview_border"
+        android:padding="20dp"
+        android:text="This is the Home Fragment. Insert random text here and this will continue for a while untill the room runs out blahblahblah I am just trying to fill save dosifoiofiasfoidso test test test test test test test test test test"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="12sp"
+        android:autoSizeMaxTextSize="24sp"
+        android:autoSizeStepGranularity="1sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/homeText"
+        app:layout_constraintBottom_toTopOf="@id/infoText2"/>
+
+    <TextView
+        android:id="@+id/infoText2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/textview_border"
+        android:padding="20dp"
+        android:text="This is the Home Fragment. Insert random text here and this will continue for a while untill the room runs out blahblahblah I am just trying to fill save dosifoiofiasfoidso"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="12sp"
+        android:autoSizeMaxTextSize="24sp"
+        android:autoSizeStepGranularity="1sp"
+        app:layout_constraintTop_toBottomOf="@id/infoText1"
+        app:layout_constraintBottom_toTopOf="@id/homeImage2" />
+
+    <!-- <ImageView
+        android:id="@+id/homeImage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/cropped_bowl"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/homeText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintDimensionRatio="H,1:1"
+        app:layout_constraintHeight_percent="0.25"
+        android:layout_marginRight="20dp"/> -->
+
+    <ImageView
+        android:id="@+id/homeImage2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:src="@drawable/home_bottom"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHeight_percent="0.25"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="16dp"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
