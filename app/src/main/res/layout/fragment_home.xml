@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeFragment">
+    tools:context=".HomeFragment"
+    android:background="#4C6444">
 
     <TextView
         android:id="@+id/homeText"
@@ -12,29 +13,12 @@
         android:layout_height="wrap_content"
         android:text="Home"
         android:textStyle="bold"
+        android:layout_margin="16dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20sp"
-        android:textSize="30sp"/>
-
-    <TextView
-        android:id="@+id/infoText1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/textview_border"
-        android:padding="20dp"
-        android:text="This is the Home Fragment. Insert random text here and this will continue for a while untill the room runs out blahblahblah I am just trying to fill save dosifoiofiasfoidso test test test test test test test test test test"
-        android:autoSizeTextType="uniform"
-        android:autoSizeMinTextSize="12sp"
-        android:autoSizeMaxTextSize="24sp"
-        android:autoSizeStepGranularity="1sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/homeText"
-        app:layout_constraintBottom_toTopOf="@id/infoText2"/>
+        android:textSize="30sp"
+        android:textColor="#E6D9CB"/>
 
     <TextView
         android:id="@+id/infoText2"
@@ -48,21 +32,9 @@
         android:autoSizeMinTextSize="12sp"
         android:autoSizeMaxTextSize="24sp"
         android:autoSizeStepGranularity="1sp"
-        app:layout_constraintTop_toBottomOf="@id/infoText1"
+        android:textColor="#562B1A"
+        app:layout_constraintTop_toBottomOf="@id/homeText"
         app:layout_constraintBottom_toTopOf="@id/homeImage2" />
-
-    <!-- <ImageView
-        android:id="@+id/homeImage"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:src="@drawable/cropped_bowl"
-        android:scaleType="fitCenter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homeText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintDimensionRatio="H,1:1"
-        app:layout_constraintHeight_percent="0.25"
-        android:layout_marginRight="20dp"/> -->
 
     <ImageView
         android:id="@+id/homeImage2"
@@ -70,6 +42,8 @@
         android:layout_height="0dp"
         android:src="@drawable/home_bottom"
         android:scaleType="centerCrop"
+        android:background="@drawable/image_shape"
+        android:clipToOutline="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

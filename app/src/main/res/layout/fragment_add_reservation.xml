@@ -5,9 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MenuFragment">
+    tools:context=".MenuFragment"
+    android:background="#4C6444">
 
-    <!-- Title -->
     <TextView
         android:id="@+id/addResTitle"
         android:layout_width="wrap_content"
@@ -31,7 +31,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/reserveButton"/>
-    <!-- Scrollable content -->
+
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="0dp"
@@ -41,7 +41,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Inner layout (scrollable) -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container"
             android:layout_width="match_parent"
