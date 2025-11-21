@@ -3,10 +3,15 @@ package com.example.comp2000cw1;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,12 +58,24 @@ public class MenuFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_menu, container, false);
+        View root = inflater.inflate(R.layout.fragment_menu, container, false);
+
+        RecyclerView recyclerView = root.findViewById(R.id.dishScroll);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+        List<String> dishes = Arrays.asList("Pizza", "Pasta", "Soup", "Sides", "Starter");
+        DishView adapter = new DishView(dishes);
+        recyclerView.setAdapter(adapter);
+
+        return root;
+
     }
 }
+
