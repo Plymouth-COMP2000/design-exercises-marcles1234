@@ -12,11 +12,11 @@
         android:id="@+id/infoTitle"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_margin="20sp"
+        android:layout_margin="20dp"
         android:text="Information"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
@@ -32,6 +32,7 @@
         android:autoSizeMinTextSize="12sp"
         android:autoSizeMaxTextSize="24sp"
         android:autoSizeStepGranularity="1sp"
+        android:textColor="@color/text"
         app:layout_constraintTop_toBottomOf="@id/infoTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

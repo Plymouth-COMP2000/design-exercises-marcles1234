@@ -13,10 +13,10 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_margin="20sp"
-        android:text="Edit a Reservation"
+        android:text="Reservations"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
@@ -30,14 +30,21 @@
         app:layout_constraintTop_toBottomOf="@id/addResTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toTopOf="@id/halfwayGuideline"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/halfwayGuidelineVertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/halfwayGuideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.87" />
 
     <TextView
         android:id="@+id/selectReservationText"
@@ -49,7 +56,8 @@
         android:autoSizeMinTextSize="12sp"
         android:autoSizeMaxTextSize="24sp"
         android:autoSizeStepGranularity="1sp"
-        android:text="Select Reservation to Edit:"
+        android:text="Edit Reservation:"
+        android:textColor="@color/text"
         app:layout_constraintTop_toTopOf="@id/infoText"
         app:layout_constraintStart_toStartOf="@id/infoText"
         />
@@ -60,7 +68,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="36dp"
         android:layout_marginEnd="36dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="6dp"
         android:background="@drawable/textview_border"
         app:layout_constraintTop_toBottomOf="@id/selectReservationText">
         <TableRow>
@@ -89,63 +97,95 @@
     </TableLayout>
 
     <TextView
-        android:id="@+id/futureDateList"
+        android:id="@+id/timeEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/textview_border"
-        android:layout_marginTop="20dp"
+        android:textColor="@color/text"
+        android:text="Time: "
         android:layout_marginLeft="20dp"
-        android:padding="16sp"
-        android:autoSizeTextType="uniform"
-        android:autoSizeMinTextSize="12sp"
-        android:autoSizeMaxTextSize="24sp"
-        android:autoSizeStepGranularity="1sp"
-        android:text="Date V"
-        app:layout_constraintStart_toStartOf="@id/infoText"
-        app:layout_constraintEnd_toStartOf="@id/futureTimeList"
-        app:layout_constraintTop_toBottomOf="@id/halfwayGuideline" />
-    <TextView
-        android:id="@+id/futureTimeList"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/textview_border"
         android:layout_marginTop="20dp"
-        android:padding="16sp"
-        android:autoSizeTextType="uniform"
-        android:autoSizeMinTextSize="12sp"
-        android:autoSizeMaxTextSize="24sp"
-        android:autoSizeStepGranularity="1sp"
-        android:text="Date V"
-        app:layout_constraintStart_toEndOf="@id/futureDateList"
-        app:layout_constraintEnd_toStartOf="@id/futureGuestsList"
-        app:layout_constraintTop_toBottomOf="@id/halfwayGuideline" />
+        app:layout_constraintTop_toBottomOf="@id/reservationTable"
+        app:layout_constraintStart_toStartOf="@id/infoText"
+        app:layout_constraintBottom_toTopOf="@id/timeEditList"/>
+
     <TextView
-        android:id="@+id/futureGuestsList"
+        android:id="@+id/timeEditList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text"
+        android:text="Time   V"
+        android:background="@drawable/textview_border"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="6dp"
+        android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@id/timeEditText"
+        app:layout_constraintStart_toStartOf="@id/infoText" />
+
+    <TextView
+        android:id="@+id/guestEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textColor="@color/text"
+        android:text="Date: "
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/reservationTable"
+        app:layout_constraintStart_toStartOf="@id/halfwayGuidelineVertical"
+        app:layout_constraintBottom_toTopOf="@id/guestEditList"/>
+
+    <TextView
+        android:id="@+id/guestEditList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text"
+        android:text="Date   V"
         android:background="@drawable/textview_border"
-        android:layout_marginTop="20sp"
-        android:layout_marginEnd="20sp"
-        android:padding="16sp"
-        android:autoSizeTextType="uniform"
-        android:autoSizeMinTextSize="12sp"
-        android:autoSizeMaxTextSize="24sp"
-        android:autoSizeStepGranularity="1sp"
-        android:text="Guests V"
-        app:layout_constraintStart_toEndOf="@id/futureTimeList"
-        app:layout_constraintTop_toBottomOf="@id/halfwayGuideline"
-        app:layout_constraintEnd_toEndOf="@id/infoText"/>
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="6dp"
+        android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@id/guestEditText"
+        app:layout_constraintStart_toStartOf="@id/halfwayGuidelineVertical" />
+
+    <TextView
+        android:id="@+id/dateEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text"
+        android:text="Date: "
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="@id/infoText"
+        app:layout_constraintTop_toBottomOf="@id/timeEditList"/>
+
+    <TextView
+        android:id="@+id/dateEditCalendar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:textColor="@color/text"
+        android:text="Date: "
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="6dp"
+        android:padding="10dp"
+        android:background="@drawable/textview_border"
+        app:layout_constraintStart_toStartOf="@id/infoText"
+        app:layout_constraintEnd_toEndOf="@id/infoText"
+        app:layout_constraintTop_toBottomOf="@id/dateEditText"
+        app:layout_constraintBottom_toBottomOf="@id/infoText"/>
 
     <Button
         android:id="@+id/confirmEdit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Confirm Edits"
+        android:text="Confirm Edit"
         android:layout_marginStart="36dp"
         android:layout_marginEnd="36dp"
         android:layout_marginBottom="16dp"
+        style="@style/buttons"
         app:layout_constraintStart_toStartOf="@id/infoText"
         app:layout_constraintEnd_toEndOf="@id/infoText"
-        app:layout_constraintBottom_toBottomOf="@id/infoText"/>
+        app:layout_constraintTop_toBottomOf="@id/halfwayGuideline"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

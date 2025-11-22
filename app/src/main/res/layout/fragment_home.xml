@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="20sp"
         android:textSize="30sp"
-        android:textColor="#E6D9CB"/>
+        android:textColor="@color/title"/>
 
     <TextView
         android:id="@+id/infoText2"
@@ -32,7 +32,7 @@
         android:autoSizeMinTextSize="12sp"
         android:autoSizeMaxTextSize="24sp"
         android:autoSizeStepGranularity="1sp"
-        android:textColor="#562B1A"
+        android:textColor="@color/text"
         app:layout_constraintTop_toBottomOf="@id/homeText"
         app:layout_constraintBottom_toTopOf="@id/homeImage2" />
 

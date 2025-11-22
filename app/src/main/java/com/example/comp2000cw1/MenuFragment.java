@@ -70,7 +70,7 @@ public class MenuFragment extends Fragment {
         RecyclerView recyclerView = root.findViewById(R.id.dishScroll);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        List<String> dishes = Arrays.asList("Pizza", "Pasta", "Soup", "Sides", "Starter");
+        List<String> dishes = Arrays.asList("Pepperoni", "Meat Feast", "Margherita", "Hawaiian", "Anchovy");
         DishView adapter = new DishView(dishes);
         recyclerView.setAdapter(adapter);
 
