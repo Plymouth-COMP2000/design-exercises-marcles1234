@@ -19,6 +19,14 @@
         app:layout_constraintTop_toTopOf="parent"
         android:textColor="@color/title"/>
 
+    <Button
+        style="@style/backButton"
+        android:id="@+id/back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/dishTypeScroll"/>
+
+
     <HorizontalScrollView
         android:id="@+id/dishTypeScroll"
         android:layout_width="match_parent"

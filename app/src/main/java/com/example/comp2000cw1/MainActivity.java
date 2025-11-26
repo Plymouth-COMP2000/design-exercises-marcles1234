@@ -56,4 +56,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void goBack() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 1) {
+            fragmentManager.popBackStack();
+        }
+    }
 }

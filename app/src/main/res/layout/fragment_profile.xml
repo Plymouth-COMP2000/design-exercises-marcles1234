@@ -19,6 +19,13 @@
         android:layout_margin="20sp"
         android:textSize="30sp" />
 
+    <Button
+        style="@style/backButton"
+        android:id="@+id/back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/profileScrollView"/>
+
     <ScrollView
         android:id="@+id/profileScrollView"
         android:fillViewport="true"

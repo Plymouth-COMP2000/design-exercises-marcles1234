@@ -58,7 +58,6 @@ public class MenuFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
 
     @Override
@@ -66,6 +65,11 @@ public class MenuFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_menu, container, false);
+
+        View backButton = root.findViewById(R.id.back);
+        backButton.setOnClickListener(v -> {
+            ((MainActivity) requireActivity()).goBack();
+        });
 
         RecyclerView recyclerView = root.findViewById(R.id.dishScroll);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -75,7 +79,6 @@ public class MenuFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         return root;
-
     }
 }
 
