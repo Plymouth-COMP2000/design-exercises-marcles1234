@@ -110,16 +110,54 @@
                 app:layout_constraintEnd_toEndOf="@+id/menuScrollView"/>
 
             <TextView
+                android:id="@+id/dishNameText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Dish description here\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nContains:Milk"
-                android:background="@drawable/textview_border"
+                android:text="Dish title"
                 android:padding="16dp"
                 android:textColor="@color/text"
                 app:layout_constraintTop_toBottomOf="@id/dishScroll"
-                app:layout_constraintBottom_toBottomOf="@id/menuScrollView"
-                app:layout_constraintStart_toStartOf="@id/menuScrollView"
-                app:layout_constraintEnd_toEndOf="@id/menuScrollView"/>
+                app:layout_constraintStart_toStartOf="@id/menuScrollView"/>
+
+            <TextView
+                android:id="@+id/dishDescriptionText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Dish text"
+                android:padding="16dp"
+                android:textColor="@color/text"
+                app:layout_constraintTop_toBottomOf="@id/dishNameText"
+                app:layout_constraintStart_toStartOf="@id/menuScrollView"/>
+
+            <TextView
+                android:id="@+id/dishPriceText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Dish price"
+                android:padding="16dp"
+                android:textColor="@color/text"
+                app:layout_constraintTop_toBottomOf="@id/dishDescriptionText"
+                app:layout_constraintStart_toStartOf="@id/menuScrollView"/>
+
+            <TextView
+                android:id="@+id/dishAllergensText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Dish allergens"
+                android:padding="16dp"
+                android:textColor="@color/text"
+                app:layout_constraintTop_toBottomOf="@id/dishPriceText"
+                app:layout_constraintStart_toStartOf="@id/menuScrollView"/>
+
+            <TextView
+                android:id="@+id/dishImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Dish image"
+                android:padding="16dp"
+                android:textColor="@color/text"
+                app:layout_constraintTop_toBottomOf="@id/dishAllergensText"
+                app:layout_constraintStart_toStartOf="@id/menuScrollView"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

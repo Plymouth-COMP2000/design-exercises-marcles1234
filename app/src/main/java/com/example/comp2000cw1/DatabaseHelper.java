@@ -91,4 +91,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return dishList;
     }
 
+    public DataModel getDishByName(String dishName) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + MENU + " WHERE " + DISH_NAME + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{dishName});
+        DataModel dataModel = null;
+        if (cursor.moveToFirst()) {
+            String dish_Name = cursor.getString(0);
+            String dish_Type = cursor.getString(1);
+            String dish_Description = cursor.getString(2);
+            String dish_Price = cursor.getString(3);
+            String dish_Allergens = cursor.getString(4);
+            String dish_Image = cursor.getString(5);
+            dataModel = new DataModel(dish_Name, dish_Type, dish_Description, dish_Price, dish_Allergens, dish_Image);
+        }
+        cursor.close();
+        db.close();
+        return dataModel;
+    }
+
 }
