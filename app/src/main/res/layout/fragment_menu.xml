@@ -20,6 +20,16 @@
         android:textColor="@color/title"/>
 
     <Button
+        android:id="@+id/additem"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/transparent"
+        android:drawableRight="@drawable/add"
+        app:layout_constraintEnd_toStartOf="@id/back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/dishTypeScroll"/>
+
+    <Button
         style="@style/backButton"
         android:id="@+id/back"
         app:layout_constraintEnd_toEndOf="parent"

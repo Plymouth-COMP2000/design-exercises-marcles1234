@@ -8,20 +8,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class addReservationFragment extends Fragment {
-
+public class AddMenuFragment extends Fragment {
+    
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    public addReservationFragment() {
+    public AddMenuFragment() {
         // Required empty public constructor
     }
-
-    public static addReservationFragment newInstance(String param1, String param2) {
-        addReservationFragment fragment = new addReservationFragment();
+    
+    public static AddMenuFragment newInstance(String param1, String param2) {
+        AddMenuFragment fragment = new AddMenuFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -41,11 +42,14 @@ public class addReservationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_add_reservation, container, false);
+        // Inflate the layout for this fragment
+        View root = inflater.inflate(R.layout.fragment_add_menu, container, false);
+
         View backButton = root.findViewById(R.id.back);
         backButton.setOnClickListener(v -> {
             ((MainActivity) requireActivity()).goBack();
         });
+
         return root;
     }
 }
