@@ -48,8 +48,6 @@ public class MenuFragment extends Fragment {
 
     TextView dishNameText, dishDescriptionText, dishPriceText, dishAllergensText, dishImage;
     Button starterButton, pastaButton, pizzaButton, soupButton, sidesButton, additemBtn;
-    String selectedDish;
-
     RecyclerView dishScroll;
 
 
@@ -86,11 +84,7 @@ public class MenuFragment extends Fragment {
 
         DatabaseHelper databaseHelper = new DatabaseHelper(requireContext());
         DataModel data = databaseHelper.getDishByName("Spaghetti");
-        dishNameText.setText(data.getDishName());
-        dishDescriptionText.setText(data.getDishDescription());
-        dishPriceText.setText(data.getDishPrice());
-        dishAllergensText.setText(data.getDishAllergens());
-        dishImage.setText(data.getDishImage());
+
         return root;
     }
 
@@ -135,7 +129,17 @@ public class MenuFragment extends Fragment {
             List<String> dishes = databaseHelper.getDishesByType(category);
             DishView adapter = new DishView(dishes, dishName -> {
                 Toast.makeText(requireContext(), "Dish clicked: " + dishName, Toast.LENGTH_SHORT).show();
-                selectedDish = dishName;
+                DataModel itemData = databaseHelper.getDishByName(dishName);
+                dishNameText.setVisibility(View.VISIBLE);
+                dishDescriptionText.setVisibility(View.VISIBLE);
+                dishPriceText.setVisibility(View.VISIBLE);
+                dishAllergensText.setVisibility(View.VISIBLE);
+                dishImage.setVisibility(View.VISIBLE);
+                dishNameText.setText(itemData.getDishName());
+                dishDescriptionText.setText(itemData.getDishDescription());
+                dishPriceText.setText(itemData.getDishPrice());
+                dishAllergensText.setText(itemData.getDishAllergens());
+                dishImage.setText(itemData.getDishImage());
             });
             dishScroll.setAdapter(adapter);
         };
