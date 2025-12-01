@@ -12,10 +12,17 @@ import java.util.List;
 
 public class DishView extends RecyclerView.Adapter<DishView.DishViewHolder> {
 
-    private List<String> dishes;
+    public interface OnDishClickListener {
+        void onDishClick(String dishName);
+    }
 
-    public DishView(List<String> dishes) {
+    private List<String> dishes;
+    private OnDishClickListener listener;
+
+
+    public DishView(List<String> dishes, OnDishClickListener listener) {
         this.dishes = dishes;
+        this.listener = listener;
     }
 
     @NonNull
@@ -30,6 +37,12 @@ public class DishView extends RecyclerView.Adapter<DishView.DishViewHolder> {
     public void onBindViewHolder(@NonNull DishViewHolder holder, int position) {
         String dishName = dishes.get(position);
         holder.dishButton.setText(dishName);
+
+        holder.dishButton.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onDishClick(dishName);
+            }
+        });
     }
 
     @Override

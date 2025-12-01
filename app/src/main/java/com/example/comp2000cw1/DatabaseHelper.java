@@ -110,4 +110,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return dataModel;
     }
 
+    public List<String> getDishesByType(String dishName) {
+        List<String> dishList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT " + DISH_NAME + " FROM " + MENU + " WHERE " + DISH_TYPE + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{dishName});
+        if (cursor.moveToFirst()) {
+            do {
+                String dish_Name = cursor.getString(0);
+                dishList.add(dish_Name);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return dishList;
+    }
+
 }

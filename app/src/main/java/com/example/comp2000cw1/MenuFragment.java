@@ -14,7 +14,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -45,6 +47,11 @@ public class MenuFragment extends Fragment {
     }
 
     TextView dishNameText, dishDescriptionText, dishPriceText, dishAllergensText, dishImage;
+    Button starterButton, pastaButton, pizzaButton, soupButton, sidesButton, additemBtn;
+    String selectedDish;
+
+    RecyclerView dishScroll;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,15 +76,13 @@ public class MenuFragment extends Fragment {
         RecyclerView recyclerView = root.findViewById(R.id.dishScroll);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        List<String> dishes = Arrays.asList("Pepperoni", "Meat Feast", "Margherita", "Hawaiian", "Anchovy");
-        DishView adapter = new DishView(dishes);
-        recyclerView.setAdapter(adapter);
 
         dishNameText=root.findViewById(R.id.dishNameText);
         dishDescriptionText=root.findViewById(R.id.dishDescriptionText);
         dishPriceText=root.findViewById(R.id.dishPriceText);
         dishAllergensText=root.findViewById(R.id.dishAllergensText);
         dishImage=root.findViewById(R.id.dishImage);
+
 
         DatabaseHelper databaseHelper = new DatabaseHelper(requireContext());
         DataModel data = databaseHelper.getDishByName("Spaghetti");
@@ -93,13 +98,53 @@ public class MenuFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button additemBtn = view.findViewById(R.id.additem);
-
+        additemBtn = view.findViewById(R.id.additem);
         additemBtn.setOnClickListener(v -> {
             AddMenuFragment newFragment = new AddMenuFragment();
 
             ((MainActivity) requireActivity()).replaceFragment(newFragment);
         });
+
+
+        starterButton=view.findViewById(R.id.starterButton);
+        pastaButton=view.findViewById(R.id.pastaButton);
+        pizzaButton=view.findViewById(R.id.pizzaButton);
+        soupButton=view.findViewById(R.id.soupButton);
+        sidesButton=view.findViewById(R.id.sidesButton);
+        dishScroll=view.findViewById(R.id.dishScroll);
+
+        View.OnClickListener showDishScroll = v -> {
+            dishScroll.setVisibility(View.VISIBLE);
+            dishScroll.setLayoutManager(new LinearLayoutManager(requireContext()));
+            String category = "";
+            if (v.getId() == R.id.starterButton) {
+                category = "Starter";
+            } else if (v.getId() == R.id.pastaButton) {
+                category = "Pasta";
+            } else if (v.getId() == R.id.pizzaButton) {
+                category = "Pizza";
+            } else if (v.getId() == R.id.soupButton) {
+                category = "Soup";
+            } else if (v.getId() == R.id.sidesButton) {
+                category = "Sides";
+            } else {
+                category = "";
+            }
+
+            DatabaseHelper databaseHelper = new DatabaseHelper(requireContext());
+            List<String> dishes = databaseHelper.getDishesByType(category);
+            DishView adapter = new DishView(dishes, dishName -> {
+                Toast.makeText(requireContext(), "Dish clicked: " + dishName, Toast.LENGTH_SHORT).show();
+                selectedDish = dishName;
+            });
+            dishScroll.setAdapter(adapter);
+        };
+
+        starterButton.setOnClickListener(showDishScroll);
+        pastaButton.setOnClickListener(showDishScroll);
+        pizzaButton.setOnClickListener(showDishScroll);
+        soupButton.setOnClickListener(showDishScroll);
+        sidesButton.setOnClickListener(showDishScroll);
     }
 }
 
