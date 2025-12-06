@@ -47,7 +47,7 @@ public class MenuFragment extends Fragment {
         return fragment;
     }
 
-    TextView dishNameText, dishDescriptionText, dishPriceText, dishAllergensText;
+    TextView dishNameText, dishDescriptionText, dishPriceText, dishAllergensText, dishAllergensText1;
     ImageView dishImage;
     Button starterButton, pastaButton, pizzaButton, soupButton, sidesButton, additemBtn, editItemBtn;
     RecyclerView dishScroll;
@@ -87,6 +87,7 @@ public class MenuFragment extends Fragment {
         dishDescriptionText=view.findViewById(R.id.dishDescriptionText);
         dishPriceText=view.findViewById(R.id.dishPriceText);
         dishAllergensText=view.findViewById(R.id.dishAllergensText);
+        dishAllergensText1=view.findViewById(R.id.dishAllergensText1);
         dishImage=view.findViewById(R.id.dishImage);
         starterButton=view.findViewById(R.id.starterButton);
         pastaButton=view.findViewById(R.id.pastaButton);
@@ -136,6 +137,7 @@ public class MenuFragment extends Fragment {
                 dishDescriptionText.setVisibility(View.VISIBLE);
                 dishPriceText.setVisibility(View.VISIBLE);
                 dishAllergensText.setVisibility(View.VISIBLE);
+                dishAllergensText1.setVisibility(View.VISIBLE);
                 dishImage.setVisibility(View.VISIBLE);
                 dishNameText.setText(itemData.getDishName());
                 dishDescriptionText.setText(itemData.getDishDescription());

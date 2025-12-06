@@ -162,15 +162,30 @@
                 app:layout_constraintEnd_toStartOf="@id/dishImage" />
 
             <TextView
-                android:id="@+id/dishAllergensText"
-                android:layout_width="0dp"
+                android:id="@+id/dishAllergensText1"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Dish allergens"
-                android:padding="16dp"
+                android:text="Contains: "
+                android:paddingStart="16dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
                 android:textColor="@color/text"
                 android:visibility="invisible"
                 app:layout_constraintTop_toBottomOf="@id/dishPriceText"
                 app:layout_constraintStart_toStartOf="@id/menuScrollView"
+                app:layout_constraintEnd_toStartOf="@id/dishAllergensText" />
+            <TextView
+                android:id="@+id/dishAllergensText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="Dish allergens"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:paddingEnd="16dp"
+                android:textColor="@color/text"
+                android:visibility="invisible"
+                app:layout_constraintTop_toBottomOf="@id/dishPriceText"
+                app:layout_constraintStart_toEndOf="@id/dishAllergensText1"
                 app:layout_constraintEnd_toStartOf="@id/dishImage" />
 
             <ImageView
