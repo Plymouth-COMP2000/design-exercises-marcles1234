@@ -20,6 +20,13 @@
         android:textColor="@color/title"/>
 
     <Button
+        style="@style/backButton"
+        android:id="@+id/back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/dishTypeScroll"/>
+
+    <Button
         android:id="@+id/additem"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
@@ -30,9 +37,12 @@
         app:layout_constraintBottom_toTopOf="@id/dishTypeScroll"/>
 
     <Button
-        style="@style/backButton"
-        android:id="@+id/back"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/edititem"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/transparent"
+        android:drawableRight="@drawable/edit"
+        app:layout_constraintEnd_toStartOf="@id/additem"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/dishTypeScroll"/>
 
@@ -117,58 +127,64 @@
 
             <TextView
                 android:id="@+id/dishNameText"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:text="Dish title"
                 android:padding="16dp"
                 android:textColor="@color/text"
                 android:visibility="invisible"
                 app:layout_constraintTop_toBottomOf="@id/dishScroll"
-                app:layout_constraintStart_toStartOf="@id/menuScrollView"/>
+                app:layout_constraintStart_toStartOf="@id/menuScrollView"
+                app:layout_constraintEnd_toStartOf="@id/dishImage" />
 
             <TextView
                 android:id="@+id/dishDescriptionText"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:text="Dish text"
                 android:padding="16dp"
                 android:textColor="@color/text"
                 android:visibility="invisible"
                 app:layout_constraintTop_toBottomOf="@id/dishNameText"
-                app:layout_constraintStart_toStartOf="@id/menuScrollView"/>
+                app:layout_constraintStart_toStartOf="@id/menuScrollView"
+                app:layout_constraintEnd_toStartOf="@id/dishImage" />
 
             <TextView
                 android:id="@+id/dishPriceText"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:text="Dish price"
                 android:padding="16dp"
                 android:textColor="@color/text"
                 android:visibility="invisible"
                 app:layout_constraintTop_toBottomOf="@id/dishDescriptionText"
-                app:layout_constraintStart_toStartOf="@id/menuScrollView"/>
+                app:layout_constraintStart_toStartOf="@id/menuScrollView"
+                app:layout_constraintEnd_toStartOf="@id/dishImage" />
 
             <TextView
                 android:id="@+id/dishAllergensText"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:text="Dish allergens"
                 android:padding="16dp"
                 android:textColor="@color/text"
                 android:visibility="invisible"
                 app:layout_constraintTop_toBottomOf="@id/dishPriceText"
-                app:layout_constraintStart_toStartOf="@id/menuScrollView"/>
+                app:layout_constraintStart_toStartOf="@id/menuScrollView"
+                app:layout_constraintEnd_toStartOf="@id/dishImage" />
 
-            <TextView
+            <ImageView
                 android:id="@+id/dishImage"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Dish image"
-                android:padding="16dp"
-                android:textColor="@color/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/image_shape"
+                android:src="@drawable/cropped_bowl"
+                android:clipToOutline="true"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
                 android:visibility="invisible"
-                app:layout_constraintTop_toBottomOf="@id/dishAllergensText"
-                app:layout_constraintStart_toStartOf="@id/menuScrollView"/>
+                app:layout_constraintEnd_toEndOf="@id/menuScrollView"
+                app:layout_constraintTop_toTopOf="@id/dishNameText" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

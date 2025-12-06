@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,9 +47,11 @@ public class MenuFragment extends Fragment {
         return fragment;
     }
 
-    TextView dishNameText, dishDescriptionText, dishPriceText, dishAllergensText, dishImage;
-    Button starterButton, pastaButton, pizzaButton, soupButton, sidesButton, additemBtn;
+    TextView dishNameText, dishDescriptionText, dishPriceText, dishAllergensText;
+    ImageView dishImage;
+    Button starterButton, pastaButton, pizzaButton, soupButton, sidesButton, additemBtn, editItemBtn;
     RecyclerView dishScroll;
+    private String currentDish;
 
 
     @Override
@@ -71,20 +74,6 @@ public class MenuFragment extends Fragment {
             ((MainActivity) requireActivity()).goBack();
         });
 
-        RecyclerView recyclerView = root.findViewById(R.id.dishScroll);
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-
-
-        dishNameText=root.findViewById(R.id.dishNameText);
-        dishDescriptionText=root.findViewById(R.id.dishDescriptionText);
-        dishPriceText=root.findViewById(R.id.dishPriceText);
-        dishAllergensText=root.findViewById(R.id.dishAllergensText);
-        dishImage=root.findViewById(R.id.dishImage);
-
-
-        DatabaseHelper databaseHelper = new DatabaseHelper(requireContext());
-        DataModel data = databaseHelper.getDishByName("Spaghetti");
-
         return root;
     }
 
@@ -93,19 +82,33 @@ public class MenuFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         additemBtn = view.findViewById(R.id.additem);
-        additemBtn.setOnClickListener(v -> {
-            AddMenuFragment newFragment = new AddMenuFragment();
-
-            ((MainActivity) requireActivity()).replaceFragment(newFragment);
-        });
-
-
+        editItemBtn = view.findViewById(R.id.edititem);
+        dishNameText=view.findViewById(R.id.dishNameText);
+        dishDescriptionText=view.findViewById(R.id.dishDescriptionText);
+        dishPriceText=view.findViewById(R.id.dishPriceText);
+        dishAllergensText=view.findViewById(R.id.dishAllergensText);
+        dishImage=view.findViewById(R.id.dishImage);
         starterButton=view.findViewById(R.id.starterButton);
         pastaButton=view.findViewById(R.id.pastaButton);
         pizzaButton=view.findViewById(R.id.pizzaButton);
         soupButton=view.findViewById(R.id.soupButton);
         sidesButton=view.findViewById(R.id.sidesButton);
         dishScroll=view.findViewById(R.id.dishScroll);
+
+
+        additemBtn.setOnClickListener(v -> {
+            AddMenuFragment newFragment = new AddMenuFragment();
+
+            ((MainActivity) requireActivity()).replaceFragment(newFragment);
+        });
+
+        editItemBtn.setOnClickListener(v -> {
+            editMenuFragment newFragment = new editMenuFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("dishName", dishNameText.getText().toString());
+            newFragment.setArguments(bundle);
+            ((MainActivity) requireActivity()).replaceFragment(newFragment);
+        });
 
         View.OnClickListener showDishScroll = v -> {
             dishScroll.setVisibility(View.VISIBLE);
@@ -128,7 +131,6 @@ public class MenuFragment extends Fragment {
             DatabaseHelper databaseHelper = new DatabaseHelper(requireContext());
             List<String> dishes = databaseHelper.getDishesByType(category);
             DishView adapter = new DishView(dishes, dishName -> {
-                Toast.makeText(requireContext(), "Dish clicked: " + dishName, Toast.LENGTH_SHORT).show();
                 DataModel itemData = databaseHelper.getDishByName(dishName);
                 dishNameText.setVisibility(View.VISIBLE);
                 dishDescriptionText.setVisibility(View.VISIBLE);
@@ -139,7 +141,10 @@ public class MenuFragment extends Fragment {
                 dishDescriptionText.setText(itemData.getDishDescription());
                 dishPriceText.setText(itemData.getDishPrice());
                 dishAllergensText.setText(itemData.getDishAllergens());
-                dishImage.setText(itemData.getDishImage());
+                // Get the resource ID dynamically
+                int resId = getResources().getIdentifier(itemData.getDishImage(), "drawable", requireContext().getPackageName());
+                dishImage.setImageResource(resId);
+
             });
             dishScroll.setAdapter(adapter);
         };

@@ -126,4 +126,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return dishList;
     }
 
+    public void updateDish(String oldName, DataModel newDish) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + MENU + " SET "
+                + "dish_name = ?, "
+                + "dish_type = ?, "
+                + "dish_description = ?, "
+                + "dish_price = ?, "
+                + "dish_allergens = ?, "
+                + "dish_image = ? " + "WHERE dish_name = ?";
+
+        db.execSQL(query, new Object[]{
+                newDish.getDishName(),
+                newDish.getDishType(),
+                newDish.getDishDescription(),
+                newDish.getDishPrice(),
+                newDish.getDishAllergens(),
+                newDish.getDishImage(),
+                oldName
+        });
+    }
+
+    public void deleteDish(String dishName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + MENU + " WHERE " + DISH_NAME + " = ?";
+        db.execSQL(query, new String[]{dishName});
+    }
 }
