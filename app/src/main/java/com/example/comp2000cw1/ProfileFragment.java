@@ -89,13 +89,6 @@ public class ProfileFragment extends Fragment {
 
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences("My Prefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        if (!sharedPreferences.contains("Push Notifications")) {
-            editor.putBoolean("Push Notifications", false);
-            editor.putBoolean("Reservation Changes", false);
-            editor.putBoolean("Reservation Reminders", false);
-            editor.apply();
-        }
-
         pushNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
             editor.putBoolean("Push Notifications", isChecked);
             editor.apply();
@@ -123,6 +116,9 @@ public class ProfileFragment extends Fragment {
 
                 makeNotification();
                 Toast.makeText(requireContext(), "Push Notifications: " + sharedPreferences.getBoolean("Push Notifications", true), Toast.LENGTH_SHORT).show();
+                SharedPreferences sharedPreferences = requireContext().getSharedPreferences("My Prefs", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("Signed In", false);
             }
         });
         return root;

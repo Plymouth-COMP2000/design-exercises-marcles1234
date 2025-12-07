@@ -1,5 +1,7 @@
 package com.example.comp2000cw1;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -24,6 +26,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         replaceFragment(new HomeFragment());
 
+        SharedPreferences sharedPreferences = getSharedPreferences("My Prefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        if (!sharedPreferences.contains("Signed In")) {
+            editor.putBoolean("Signed In", false);
+            editor.putBoolean("Push Notifications", false);
+            editor.putBoolean("Reservation Changes", false);
+            editor.putBoolean("Reservation Reminders", false);
+            editor.apply();
+        }
+
         binding.navBar.setOnItemSelectedListener( item -> {
 
             int itemId = item.getItemId();
@@ -31,11 +43,19 @@ public class MainActivity extends AppCompatActivity {
             if (itemId == R.id.menu) {
                 replaceFragment(new MenuFragment());
             } else if (itemId == R.id.reservations) {
-                replaceFragment(new ReservationsFragment());
+                if (!sharedPreferences.getBoolean("Signed In", false)) {
+                    replaceFragment(new SignInFragment());
+                } else {
+                    replaceFragment(new ReservationsFragment());
+                }
             } else if (itemId == R.id.info) {
                 replaceFragment(new InfoFragment());
             } else if (itemId == R.id.profile) {
-                replaceFragment(new ProfileFragment());
+                if (!sharedPreferences.getBoolean("Signed In", false)) {
+                    replaceFragment(new SignInFragment());
+                } else {
+                    replaceFragment(new ProfileFragment());
+                }
             }
 
             return true;
