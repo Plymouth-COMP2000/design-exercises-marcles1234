@@ -51,8 +51,14 @@ public class SignInFragment extends Fragment {
                         JSONObject jsonObject = new JSONObject(response);
                         JSONObject user = jsonObject.getJSONObject("user");
                         String storedPassword = user.getString("password");
+                        String userType = user.getString("usertype");
                         if (storedPassword.equals(password)) {
                             editor.putBoolean("Signed In", true);
+                            if (userType.equals("staff")) {
+                                editor.putBoolean("Is Staff", true);
+                            } else {
+                                editor.putBoolean("Is Staff", false);
+                            }
                             editor.apply();
                             HomeFragment newFragment = new HomeFragment();
                             ((MainActivity) requireActivity()).replaceFragment(newFragment);

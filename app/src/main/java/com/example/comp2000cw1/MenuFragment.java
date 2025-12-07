@@ -1,5 +1,7 @@
 package com.example.comp2000cw1;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -95,6 +97,15 @@ public class MenuFragment extends Fragment {
         soupButton=view.findViewById(R.id.soupButton);
         sidesButton=view.findViewById(R.id.sidesButton);
         dishScroll=view.findViewById(R.id.dishScroll);
+
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("My Prefs", Context.MODE_PRIVATE);
+        if (sharedPreferences.getBoolean("Is Staff", false)) {
+            additemBtn.setVisibility(View.VISIBLE);
+            editItemBtn.setVisibility(View.VISIBLE);
+        } else {
+            additemBtn.setVisibility(View.INVISIBLE);
+            editItemBtn.setVisibility(View.INVISIBLE);
+        }
 
 
         additemBtn.setOnClickListener(v -> {

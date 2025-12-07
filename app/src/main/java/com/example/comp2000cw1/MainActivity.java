@@ -30,11 +30,13 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         if (!sharedPreferences.contains("Signed In")) {
             editor.putBoolean("Signed In", false);
+            editor.putBoolean("Is Staff", false);
             editor.putBoolean("Push Notifications", false);
             editor.putBoolean("Reservation Changes", false);
             editor.putBoolean("Reservation Reminders", false);
             editor.apply();
         }
+
 
         binding.navBar.setOnItemSelectedListener( item -> {
 

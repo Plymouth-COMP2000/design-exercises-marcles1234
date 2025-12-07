@@ -119,6 +119,8 @@ public class ProfileFragment extends Fragment {
                 SharedPreferences sharedPreferences = requireContext().getSharedPreferences("My Prefs", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean("Signed In", false);
+                editor.putBoolean("Is Staff", false);
+                editor.apply();
             }
         });
         return root;
