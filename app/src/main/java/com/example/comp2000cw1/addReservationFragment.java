@@ -1,5 +1,7 @@
 package com.example.comp2000cw1;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,8 +9,21 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CalendarView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class addReservationFragment extends Fragment {
+
+    Spinner selectTimeList, selectGuestsList;
+    CalendarView calendar;
+    Button reserveButton;
+    String selectedDate;
+
+
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -46,6 +61,53 @@ public class addReservationFragment extends Fragment {
         backButton.setOnClickListener(v -> {
             ((MainActivity) requireActivity()).goBack();
         });
+
+        selectTimeList = root.findViewById(R.id.selectTimeList);
+        String[] times = {"17:00", "17:30", "18:00", "18:30", "19:00"};
+        ArrayAdapter<String> timeAdapter = new ArrayAdapter<>(
+                requireContext(),
+                R.layout.spinner_template,
+                times
+        );
+        timeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        selectTimeList.setAdapter(timeAdapter);
+
+        selectGuestsList = root.findViewById(R.id.selectGuestsList);
+        String[] guests = {"1", "2", "3", "4", "5", "6", "7", "8"};
+        ArrayAdapter<String> guestAdapter = new ArrayAdapter<>(
+                requireContext(),
+                R.layout.spinner_template,
+                guests
+        );
+        guestAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        selectGuestsList.setAdapter(guestAdapter);
+
+        calendar = root.findViewById(R.id.calendar);
+        reserveButton = root.findViewById(R.id.reserveButton);
+        calendar.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
+            selectedDate = dayOfMonth + "/" + (month + 1) + "/" + year;
+        });
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("My Prefs", Context.MODE_PRIVATE);
+        String fullName = sharedPreferences.getString("First Name", "") + " " + sharedPreferences.getString("Last Name", "");
+        reserveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DataModelReservations data = new DataModelReservations(
+                        fullName,
+                        selectTimeList.getSelectedItem().toString(),
+                        selectGuestsList.getSelectedItem().toString(),
+                        selectedDate
+                );
+                DatabaseHelper databaseHelper = new DatabaseHelper(requireContext());
+                boolean success = databaseHelper.addReservation(data);
+                if(success) {
+                    Toast.makeText(requireContext(), "Reservation added successfully", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(requireContext(), "Error adding reservation", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         return root;
     }
 }

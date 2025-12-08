@@ -13,6 +13,8 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
+    public static final String DATABASE_NAME = "restaurant.db";
+
     public static final String MENU = "menu";
     public static final String DISH_NAME = "dish_name";
     public static final String DISH_TYPE = "dish_type";
@@ -22,26 +24,43 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DISH_ALLERGENS = "dish_allergens";
     public static final String DISH_IMAGE = "dish_image";
 
+
+    public static final String RESERVATIONS = "reservations";
+    public static final String RESERVATION_ID = "reservation_id";
+    public static final String RESERVATION_NAME = "reservation_name";
+    public static final String RESERVATION_DATE = "reservation_date";
+    public static final String RESERVATION_TIME = "reservation_time";
+    public static final String RESERVATION_GUESTS = "reservation_guests";
+
+
     public DatabaseHelper(@Nullable Context context) {
-        super(context, "menu.db", null, 1);
+        super(context, "DATABASE_NAME.db", null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTable = "CREATE TABLE " + MENU + "(" +
+        String createTableMenu = "CREATE TABLE " + MENU + "(" +
                 DISH_NAME + " TEXT PRIMARY KEY," +
                 DISH_TYPE + " TEXT," +
                 DISH_DESCRIPTION + " TEXT," +
                 DISH_PRICE + " TEXT," +
                 DISH_ALLERGENS + " TEXT," +
                 DISH_IMAGE + " TEXT)";
-        db.execSQL(createTable);
+        db.execSQL(createTableMenu);
+
+        String createTableReservations = "CREATE TABLE " + RESERVATIONS + "(" +
+                RESERVATION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                RESERVATION_NAME + " TEXT," +
+                RESERVATION_DATE + " TEXT," +
+                RESERVATION_TIME + " TEXT," +
+                RESERVATION_GUESTS + " TEXT)";
+        db.execSQL(createTableReservations);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        String dropTable = "DROP TABLE IF EXISTS " + MENU;
-        db.execSQL(dropTable);
+        db.execSQL("DROP TABLE IF EXISTS " + MENU);
+        db.execSQL("DROP TABLE IF EXISTS " + RESERVATIONS);
         onCreate(db);
     }
 
@@ -57,6 +76,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(DISH_IMAGE, dataModel.getDishImage());
 
         long result = db.insert(MENU, null, cv);
+
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean addReservation(DataModelReservations dataModel) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(RESERVATION_NAME, dataModel.getReservationName());
+        cv.put(RESERVATION_DATE, dataModel.getReservationDate());
+        cv.put(RESERVATION_TIME, dataModel.getReservationTime());
+        cv.put(RESERVATION_GUESTS, dataModel.getReservationGuests());
+
+        long result = db.insert(RESERVATIONS, null, cv);
 
         if (result == -1) {
             return false;

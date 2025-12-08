@@ -115,7 +115,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
 
                 makeNotification();
-                Toast.makeText(requireContext(), "Push Notifications: " + sharedPreferences.getBoolean("Push Notifications", true), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Name: " + sharedPreferences.getString("First Name", "No name"), Toast.LENGTH_SHORT).show();
                 SharedPreferences sharedPreferences = requireContext().getSharedPreferences("My Prefs", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean("Signed In", false);

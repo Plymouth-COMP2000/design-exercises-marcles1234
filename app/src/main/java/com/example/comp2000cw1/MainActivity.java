@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         if (!sharedPreferences.contains("Signed In")) {
             editor.putBoolean("Signed In", false);
+            editor.putString("First Name", "");
+            editor.putString("Last Name", "");
             editor.putBoolean("Is Staff", false);
             editor.putBoolean("Push Notifications", false);
             editor.putBoolean("Reservation Changes", false);
