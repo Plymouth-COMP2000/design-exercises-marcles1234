@@ -1,7 +1,10 @@
 package com.example.comp2000cw1;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -84,7 +87,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean addReservation(DataModelReservations dataModel) {
+    public long addReservation(DataModelReservations dataModel) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -94,38 +97,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(RESERVATION_GUESTS, dataModel.getReservationGuests());
 
         long result = db.insert(RESERVATIONS, null, cv);
-
-        if (result == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        db.close();
+        return result;
     }
 
-    public List<DataModel> getAllDishes(){
-        List<DataModel> dishList = new ArrayList<>();
+    public List<DataModelReservations> getAllReservations(String name){
+        List<DataModelReservations> reservationList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM " + MENU;
-        Cursor cursor = db.rawQuery(query, null);
+        String query = "SELECT * FROM " + RESERVATIONS + " WHERE " + RESERVATION_NAME + " = ? ";
+        Cursor cursor = db.rawQuery(query, new String[]{name});
 
         if(cursor.moveToFirst()) {
             do {
-                String dishName = cursor.getString(0);
-                String dishType = cursor.getString(1);
-                String dishDescription = cursor.getString(2);
-                String dishPrice = cursor.getString(3);
-                String dishAllergens = cursor.getString(4);
-                String dishImage = cursor.getString(5);
+                int reservationId = cursor.getInt(0);
+                String reservationName = cursor.getString(1);
+                String reservationDate = cursor.getString(2);
+                String reservationTime = cursor.getString(3);
+                String reservationGuests = cursor.getString(4);
 
-                DataModel dataModel = new DataModel(dishName, dishType, dishDescription, dishPrice, dishAllergens, dishImage);
-                dishList.add(dataModel);
+                DataModelReservations dataModel = new DataModelReservations(reservationId, reservationName, reservationDate, reservationTime, reservationGuests);
+                reservationList.add(dataModel);
             } while (cursor.moveToNext());
         } else {
         }
 
         cursor.close();
         db.close();
-        return dishList;
+        return reservationList;
     }
 
     public DataModel getDishByName(String dishName) {

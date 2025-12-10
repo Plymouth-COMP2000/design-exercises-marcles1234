@@ -1,5 +1,7 @@
 package com.example.comp2000cw1;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,13 +9,21 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReservationsFragment extends Fragment {
+
+    private ReservationAdapter adapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,@Nullable ViewGroup container,
@@ -44,6 +54,22 @@ public class ReservationsFragment extends Fragment {
 
             ((MainActivity) requireActivity()).replaceFragment(newFragment);
         });
+
+        RecyclerView recyclerView = view.findViewById(R.id.reservationsText1);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("My Prefs", Context.MODE_PRIVATE);
+        String name = sharedPreferences.getString("First Name", "No name") + " " + sharedPreferences.getString("Last Name", "No name");
+        DatabaseHelper DatabaseHelper = new DatabaseHelper(requireContext());
+        List<DataModelReservations> reservations = DatabaseHelper.getAllReservations(name);
+
+        adapter = new ReservationAdapter(reservations, new ReservationAdapter.OnItemClickListener() {@Override
+            public void onItemClick(DataModelReservations reservation) {
+                Toast.makeText(getContext(), "Selected reservation ID: " + reservation.getReservationId(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        recyclerView.setAdapter(adapter);
     }
 
 }

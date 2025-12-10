@@ -1,6 +1,8 @@
 package com.example.comp2000cw1;
 
 public class DataModelReservations {
+
+    int reservationId;
     String reservationName, reservationDate, reservationTime, reservationGuests;
 
     public DataModelReservations(String reservationName, String reservationDate, String reservationTime, String reservationGuests) {
@@ -8,6 +10,21 @@ public class DataModelReservations {
         this.reservationDate = reservationDate;
         this.reservationTime = reservationTime;
         this.reservationGuests = reservationGuests;
+    }
+
+    public DataModelReservations(int reservationId, String reservationName, String reservationDate, String reservationTime, String reservationGuests) {
+        this.reservationId = reservationId;
+        this.reservationName = reservationName;
+        this.reservationDate = reservationDate;
+        this.reservationTime = reservationTime;
+        this.reservationGuests = reservationGuests;
+    }
+
+    public int getReservationId() {
+        return reservationId;
+    }
+    public void setReservationId(int reservationId) {
+        this.reservationId = reservationId;
     }
 
     public String getReservationName() {

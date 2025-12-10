@@ -1,0 +1,72 @@
+package com.example.comp2000cw1;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
+
+public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.ReservationViewHolder> {
+    private List<DataModelReservations> reservations;
+
+    public ReservationAdapter(List<DataModelReservations> reservations, OnItemClickListener listener) {
+        this.reservations = reservations;
+        this.listener = listener;
+    }
+
+    @NonNull
+    @Override
+    public ReservationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_reservation, parent, false);
+        return new ReservationViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ReservationViewHolder holder, int position) {
+        DataModelReservations reservation = reservations.get(position);
+        holder.idTextView.setText(String.valueOf(reservation.getReservationId()));
+        holder.nameTextView.setText("");
+        holder.dateTextView.setText(reservation.getReservationDate());
+        holder.timeTextView.setText(reservation.getReservationTime());
+        holder.guestsTextView.setText(reservation.getReservationGuests());
+
+        holder.selectButton.setOnClickListener(v -> {
+            listener.onItemClick(reservation);
+        });
+    }
+
+
+    @Override
+    public int getItemCount() {
+        return reservations.size();
+    }
+
+    public static class ReservationViewHolder extends RecyclerView.ViewHolder {
+        public TextView nameTextView, idTextView, dateTextView, timeTextView, guestsTextView;
+        public Button selectButton;
+
+        public ReservationViewHolder(@NonNull View itemView) {
+            super(itemView);
+            idTextView = itemView.findViewById(R.id.reservationId);
+            nameTextView = itemView.findViewById(R.id.reservationName);
+            dateTextView = itemView.findViewById(R.id.reservationDate);
+            timeTextView = itemView.findViewById(R.id.reservationTime);
+            guestsTextView = itemView.findViewById(R.id.reservationGuests);
+            selectButton = itemView.findViewById(R.id.reservationButton);
+        }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(DataModelReservations reservation);
+    }
+
+    private OnItemClickListener listener;
+
+}

@@ -94,13 +94,14 @@ public class addReservationFragment extends Fragment {
             public void onClick(View v) {
                 DataModelReservations data = new DataModelReservations(
                         fullName,
+                        selectedDate,
                         selectTimeList.getSelectedItem().toString(),
-                        selectGuestsList.getSelectedItem().toString(),
-                        selectedDate
+                        selectGuestsList.getSelectedItem().toString()
+
                 );
                 DatabaseHelper databaseHelper = new DatabaseHelper(requireContext());
-                boolean success = databaseHelper.addReservation(data);
-                if(success) {
+                long success = databaseHelper.addReservation(data);
+                if(success != -1) {
                     Toast.makeText(requireContext(), "Reservation added successfully", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(requireContext(), "Error adding reservation", Toast.LENGTH_SHORT).show();

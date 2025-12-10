@@ -11,6 +11,7 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -21,4 +22,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "COMP2000 CW1"
 include(":app")
- 
