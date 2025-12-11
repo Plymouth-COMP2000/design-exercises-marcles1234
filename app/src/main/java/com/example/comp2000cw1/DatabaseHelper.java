@@ -145,6 +145,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return dataModel;
     }
 
+    public DataModelReservations getReservationByID(int ID) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + RESERVATIONS + " WHERE " + RESERVATION_ID + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(ID)});
+        DataModelReservations dataModel = null;
+        if (cursor.moveToFirst()) {
+            int reservationId = cursor.getInt(0);
+            String reservationName = "";
+            String reservationDate = cursor.getString(2);
+            String reservationTime = cursor.getString(3);
+            String reservationGuests = cursor.getString(4);
+            dataModel = new DataModelReservations(reservationId, reservationName, reservationDate, reservationTime, reservationGuests);
+        }
+        cursor.close();
+        db.close();
+        return dataModel;
+    }
+
     public List<String> getDishesByType(String dishName) {
         List<String> dishList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();

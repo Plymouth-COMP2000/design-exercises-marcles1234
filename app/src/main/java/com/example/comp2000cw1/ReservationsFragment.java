@@ -24,7 +24,7 @@ import java.util.List;
 public class ReservationsFragment extends Fragment {
 
     private ReservationAdapter adapter;
-    public int selectedReservation;
+    public static int selectedReservation;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,@Nullable ViewGroup container,
@@ -44,19 +44,6 @@ public class ReservationsFragment extends Fragment {
         Button makeReservationBtn = view.findViewById(R.id.addReservation);
         Button editReservationBtn = view.findViewById(R.id.editReservation);
         Button removeReservationBtn = view.findViewById(R.id.removeReservation);
-
-
-        makeReservationBtn.setOnClickListener(v -> {
-            addReservationFragment newFragment = new addReservationFragment();
-
-            ((MainActivity) requireActivity()).replaceFragment(newFragment);
-        });
-
-        editReservationBtn.setOnClickListener(v -> {
-            editReservationFragment newFragment = new editReservationFragment();
-
-            ((MainActivity) requireActivity()).replaceFragment(newFragment);
-        });
 
         RecyclerView recyclerView = view.findViewById(R.id.reservationsText1);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -81,6 +68,18 @@ public class ReservationsFragment extends Fragment {
                 adapter.notifyDataSetChanged();
                 selectedReservation = -1;
             }
+        });
+
+        makeReservationBtn.setOnClickListener(v -> {
+            addReservationFragment newFragment = new addReservationFragment();
+
+            ((MainActivity) requireActivity()).replaceFragment(newFragment);
+        });
+
+        editReservationBtn.setOnClickListener(v -> {
+            editReservationFragment newFragment = new editReservationFragment();
+
+            ((MainActivity) requireActivity()).replaceFragment(newFragment);
         });
     }
 

@@ -1,5 +1,7 @@
 package com.example.comp2000cw1;
 
+import static com.example.comp2000cw1.ReservationsFragment.selectedReservation;
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +9,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,6 +70,16 @@ public class editReservationFragment extends Fragment {
         backButton.setOnClickListener(v -> {
             ((MainActivity) requireActivity()).goBack();
         });
+
+        String text = "";
+        TextView reservationDisplay = root.findViewById(R.id.reservationTable);
+        Toast.makeText(requireContext(), "ID = " + selectedReservation, Toast.LENGTH_SHORT).show();
+        DatabaseHelper DatabaseHelper = new DatabaseHelper(requireContext());
+        List<DataModelReservations> reservations = Collections.singletonList(DatabaseHelper.getReservationByID(selectedReservation));
+        for (DataModelReservations reservation : reservations) {
+            text += reservation.getReservationName() + "    " + reservation.getReservationDate() + "   " + reservation.getReservationTime() + "  " + reservation.getReservationGuests();
+        }
+        reservationDisplay.setText(text);
         return root;
     }
 }
