@@ -187,4 +187,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String query = "DELETE FROM " + MENU + " WHERE " + DISH_NAME + " = ?";
         db.execSQL(query, new String[]{dishName});
     }
+
+    public void deleteReservation(int reservationId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + RESERVATIONS + " WHERE " + RESERVATION_ID + " = ?";
+        db.execSQL(query, new String[]{String.valueOf(reservationId)});
+    }
 }

@@ -24,6 +24,7 @@ import java.util.List;
 public class ReservationsFragment extends Fragment {
 
     private ReservationAdapter adapter;
+    public int selectedReservation;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,@Nullable ViewGroup container,
@@ -42,6 +43,8 @@ public class ReservationsFragment extends Fragment {
 
         Button makeReservationBtn = view.findViewById(R.id.addReservation);
         Button editReservationBtn = view.findViewById(R.id.editReservation);
+        Button removeReservationBtn = view.findViewById(R.id.removeReservation);
+
 
         makeReservationBtn.setOnClickListener(v -> {
             addReservationFragment newFragment = new addReservationFragment();
@@ -65,11 +68,20 @@ public class ReservationsFragment extends Fragment {
 
         adapter = new ReservationAdapter(reservations, new ReservationAdapter.OnItemClickListener() {@Override
             public void onItemClick(DataModelReservations reservation) {
-                Toast.makeText(getContext(), "Selected reservation ID: " + reservation.getReservationId(), Toast.LENGTH_SHORT).show();
-
+                selectedReservation = reservation.getReservationId();
             }
         });
         recyclerView.setAdapter(adapter);
+
+        removeReservationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseHelper.deleteReservation(selectedReservation);
+                Toast.makeText(requireContext(), "Reservation deleted successfully", Toast.LENGTH_SHORT).show();
+                adapter.notifyDataSetChanged();
+                selectedReservation = -1;
+            }
+        });
     }
 
 }
