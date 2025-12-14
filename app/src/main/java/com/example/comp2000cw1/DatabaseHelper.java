@@ -126,6 +126,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return reservationList;
     }
 
+    public List<DataModelReservations> getAllReservations(){
+        List<DataModelReservations> reservationList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + RESERVATIONS;
+        Cursor cursor = db.rawQuery(query, null);
+
+        if(cursor.moveToFirst()) {
+            do {
+                int reservationId = cursor.getInt(0);
+                String reservationName = cursor.getString(1);
+                String reservationDate = cursor.getString(2);
+                String reservationTime = cursor.getString(3);
+                String reservationGuests = cursor.getString(4);
+
+                DataModelReservations dataModel = new DataModelReservations(reservationId, reservationName, reservationDate, reservationTime, reservationGuests);
+                reservationList.add(dataModel);
+            } while (cursor.moveToNext());
+        } else {
+        }
+
+        cursor.close();
+        db.close();
+        return reservationList;
+    }
+
     public DataModel getDishByName(String dishName) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + MENU + " WHERE " + DISH_NAME + " = ?";
@@ -187,7 +212,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "dish_description = ?, "
                 + "dish_price = ?, "
                 + "dish_allergens = ?, "
-                + "dish_image = ? " + "WHERE dish_name = ?";
+                + "dish_image = ? "
+                + "WHERE dish_name = ?";
 
         db.execSQL(query, new Object[]{
                 newDish.getDishName(),
@@ -197,6 +223,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 newDish.getDishAllergens(),
                 newDish.getDishImage(),
                 oldName
+        });
+    }
+
+    public void updateReservation(int id, DataModelReservations newRes) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "UPDATE " + RESERVATIONS + " SET "
+                + "reservation_date = ?, "
+                + "reservation_time = ?, "
+                + "reservation_guests = ? "
+                + "WHERE RESERVATION_ID = ?";
+
+        db.execSQL(query, new Object[]{
+                newRes.getReservationDate(),
+                newRes.getReservationTime(),
+                newRes.getReservationGuests(),
+                id
         });
     }
 

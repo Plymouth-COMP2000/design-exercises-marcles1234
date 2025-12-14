@@ -12,6 +12,12 @@ public class DataModelReservations {
         this.reservationGuests = reservationGuests;
     }
 
+    public DataModelReservations(String reservationDate, String reservationTime, String reservationGuests) {
+        this.reservationDate = reservationDate;
+        this.reservationTime = reservationTime;
+        this.reservationGuests = reservationGuests;
+    }
+
     public DataModelReservations(int reservationId, String reservationName, String reservationDate, String reservationTime, String reservationGuests) {
         this.reservationId = reservationId;
         this.reservationName = reservationName;

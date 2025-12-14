@@ -2,6 +2,8 @@ package com.example.comp2000cw1;
 
 import static com.example.comp2000cw1.ReservationsFragment.selectedReservation;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,6 +11,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CalendarView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,33 +28,22 @@ import java.util.List;
  */
 public class editReservationFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    Spinner selectTimeList, selectGuestsList;
+    Button confirmEdit;
+    CalendarView calendar;
+    String selectedDate;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+
+
+
 
     public editReservationFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment editReservationFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static editReservationFragment newInstance(String param1, String param2) {
         editReservationFragment fragment = new editReservationFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,8 +52,6 @@ public class editReservationFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -80,6 +73,44 @@ public class editReservationFragment extends Fragment {
             text += reservation.getReservationName() + "    " + reservation.getReservationDate() + "   " + reservation.getReservationTime() + "  " + reservation.getReservationGuests();
         }
         reservationDisplay.setText(text);
+
+        selectTimeList = root.findViewById(R.id.timeEditList);
+        String[] times = {"17:00", "17:30", "18:00", "18:30", "19:00"};
+        ArrayAdapter<String> timeAdapter = new ArrayAdapter<>(
+                requireContext(),
+                R.layout.spinner_template,
+                times
+        );
+        timeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        selectTimeList.setAdapter(timeAdapter);
+
+        selectGuestsList = root.findViewById(R.id.guestEditList);
+        String[] guests = {"1", "2", "3", "4", "5", "6", "7", "8"};
+        ArrayAdapter<String> guestAdapter = new ArrayAdapter<>(
+                requireContext(),
+                R.layout.spinner_template,
+                guests
+        );
+        guestAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        selectGuestsList.setAdapter(guestAdapter);
+
+        calendar = root.findViewById(R.id.dateEditCalendar);
+        calendar.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
+            selectedDate = dayOfMonth + "/" + (month + 1) + "/" + year;
+        });
+        confirmEdit = root.findViewById(R.id.confirmEdit);
+        confirmEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DataModelReservations data = new DataModelReservations(
+                        selectedDate,
+                        selectTimeList.getSelectedItem().toString(),
+                        selectGuestsList.getSelectedItem().toString()
+                );
+                DatabaseHelper databaseHelper = new DatabaseHelper(requireContext());
+                databaseHelper.updateReservation(selectedReservation, data);
+            }
+        });
         return root;
     }
 }

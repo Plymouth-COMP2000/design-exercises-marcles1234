@@ -29,6 +29,7 @@ public class ReservationsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,@Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        // BACK BUTTON
         View root = inflater.inflate(R.layout.fragment_reservations, container, false);
         View backButton = root.findViewById(R.id.back);
         backButton.setOnClickListener(v -> {
@@ -49,10 +50,26 @@ public class ReservationsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences("My Prefs", Context.MODE_PRIVATE);
+
+
+        //CHANGE LAYOUT IF STAFF MEMBER IS LOGGED IN
+        if (sharedPreferences.getBoolean("Is Staff", false)) {
+            editReservationBtn.setVisibility(View.GONE);
+            removeReservationBtn.setVisibility(View.GONE);
+            makeReservationBtn.setText("Remove Reservation");
+        }
+
+
+        //RESERVATIONS FETCH
         String name = sharedPreferences.getString("First Name", "No name") + " " + sharedPreferences.getString("Last Name", "No name");
         DatabaseHelper DatabaseHelper = new DatabaseHelper(requireContext());
         List<DataModelReservations> reservations = DatabaseHelper.getAllReservations(name);
+        if (sharedPreferences.getBoolean("Is Staff", false)) {
+            reservations = DatabaseHelper.getAllReservations();
+        }
 
+
+        //RESERVATION DISPLAY AND ID FETCH
         adapter = new ReservationAdapter(reservations, new ReservationAdapter.OnItemClickListener() {@Override
             public void onItemClick(DataModelReservations reservation) {
                 selectedReservation = reservation.getReservationId();
@@ -60,6 +77,8 @@ public class ReservationsFragment extends Fragment {
         });
         recyclerView.setAdapter(adapter);
 
+
+        //USER RESERVATION DELETE
         removeReservationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,16 +89,26 @@ public class ReservationsFragment extends Fragment {
             }
         });
 
-        makeReservationBtn.setOnClickListener(v -> {
-            addReservationFragment newFragment = new addReservationFragment();
 
-            ((MainActivity) requireActivity()).replaceFragment(newFragment);
-        });
-
+        //DIRECT USER TO EDIT RESERVATION
         editReservationBtn.setOnClickListener(v -> {
             editReservationFragment newFragment = new editReservationFragment();
 
             ((MainActivity) requireActivity()).replaceFragment(newFragment);
+        });
+
+
+        //DIRECT USER TO CREATE RESERVATION OR DELETE RESERVATION FOR STAFF
+        makeReservationBtn.setOnClickListener(v -> {
+            if (sharedPreferences.getBoolean("Is Staff", false)) {
+                DatabaseHelper.deleteReservation(selectedReservation);
+                Toast.makeText(requireContext(), "Reservation deleted successfully", Toast.LENGTH_SHORT).show();
+                adapter.notifyDataSetChanged();
+                selectedReservation = -1;
+            } else {
+                addReservationFragment newFragment = new addReservationFragment();
+                ((MainActivity) requireActivity()).replaceFragment(newFragment);
+            }
         });
     }
 
