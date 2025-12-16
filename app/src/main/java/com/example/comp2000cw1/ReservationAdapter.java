@@ -20,6 +20,11 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
         this.listener = listener;
     }
 
+    public void setReservations(List<DataModelReservations> newReservations) {
+        this.reservations = newReservations;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ReservationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

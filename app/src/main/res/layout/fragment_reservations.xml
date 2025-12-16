@@ -51,6 +51,54 @@
         app:layout_constraintTop_toBottomOf="@id/reservationsTitle"
         app:layout_constraintBottom_toTopOf="@id/halfwayGuideline"/>
 
+    <ImageButton
+        android:id="@+id/incrementMonth"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        android:src="@drawable/outline_arrow_menu_open_24"
+        android:backgroundTint="@color/button"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@id/infoText"
+        app:layout_constraintTop_toTopOf="@id/infoText"/>
+
+    <ImageButton
+        android:id="@+id/incrementDay"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        android:src="@drawable/outline_arrow_right_24"
+        android:backgroundTint="@color/button"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="6dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@id/incrementMonth"
+        app:layout_constraintTop_toTopOf="@id/infoText"/>
+
+    <ImageButton
+        android:id="@+id/decrementMonth"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        android:src="@drawable/outline_arrow_menu_close_24"
+        android:backgroundTint="@color/button"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@id/infoText"
+        app:layout_constraintTop_toTopOf="@id/infoText"/>
+
+    <ImageButton
+        android:id="@+id/decrementDay"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        android:src="@drawable/outline_arrow_left_24"
+        android:backgroundTint="@color/button"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="10dp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@id/decrementMonth"
+        app:layout_constraintTop_toTopOf="@id/infoText"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/reservationsText1"
         android:layout_width="0dp"

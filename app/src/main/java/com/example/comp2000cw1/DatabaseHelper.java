@@ -126,11 +126,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return reservationList;
     }
 
-    public List<DataModelReservations> getAllReservations(){
+    public List<DataModelReservations> getAllReservationsByDate(String date){
         List<DataModelReservations> reservationList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM " + RESERVATIONS;
-        Cursor cursor = db.rawQuery(query, null);
+        String query = "SELECT * FROM "
+                + RESERVATIONS
+                + " WHERE "
+                + RESERVATION_DATE
+                + " = ? ";
+        Cursor cursor = db.rawQuery(query, new String[]{date});
+
 
         if(cursor.moveToFirst()) {
             do {
