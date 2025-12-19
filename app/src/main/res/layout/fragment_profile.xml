@@ -91,22 +91,13 @@
                 app:layout_constraintTop_toTopOf="@id/settingsContainer" />
 
             <Switch
-                android:id="@+id/pushNotifications"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Push Notifications"
-                android:layout_margin="36dp"
-                android:textColor="@color/text"
-                app:layout_constraintTop_toTopOf="@id/settingsTitle"
-                app:layout_constraintStart_toStartOf="parent" />
-            <Switch
                 android:id="@+id/reservationNotifications"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Reservation"
                 android:layout_margin="36dp"
                 android:textColor="@color/text"
-                app:layout_constraintTop_toBottomOf="@id/pushNotifications"
+                app:layout_constraintTop_toBottomOf="@id/settingsTitle"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <Button

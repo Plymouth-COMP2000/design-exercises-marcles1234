@@ -39,7 +39,7 @@ public class ProfileFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    Switch pushNotifications, reservationNotifications;;
+    Switch reservationNotifications;;
     Button btn;
 
     // TODO: Rename and change types of parameters
@@ -83,7 +83,6 @@ public class ProfileFragment extends Fragment {
         });
 
         btn = root.findViewById(R.id.btn);
-        pushNotifications = root.findViewById(R.id.pushNotifications);
         reservationNotifications = root.findViewById(R.id.reservationNotifications);
 
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences("My Prefs", Context.MODE_PRIVATE);
@@ -95,10 +94,14 @@ public class ProfileFragment extends Fragment {
             reservationNotifications.setText("Reservation Changes");
         }
 
-        pushNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            editor.putBoolean("Push Notifications", isChecked);
-            editor.apply();
-        });
+        //SET SWITCH
+        if (sharedPreferences.getBoolean("Reservation Changes", false)) {
+            reservationNotifications.setChecked(true);
+        } else {
+            reservationNotifications.setChecked(false);
+        }
+
+        //SWITCH LOGIC
         reservationNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
             editor.putBoolean("Reservation Changes", isChecked);
             editor.apply();

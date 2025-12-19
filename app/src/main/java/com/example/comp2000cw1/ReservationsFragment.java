@@ -67,9 +67,11 @@ public class ReservationsFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.reservationsText1);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-
+        //MAKE NOTIFICATION TO STAFF IF NEW RESERVATIONS HAVE BEEN MADE
         if (sharedPreferences.getBoolean("New Reservation", false) && sharedPreferences.getBoolean("Is Staff", false)) {
-            ((MainActivity) requireActivity()).makeNotification("New reservation(s)", sharedPreferences.getInt("No. Reservations", 0) + " reservations have been added");
+            if (sharedPreferences.getBoolean("Reservation Changes", false)) {
+                ((MainActivity) requireActivity()).makeNotification("New reservation(s)", sharedPreferences.getInt("No. Reservations", 0) + " reservations have been added");
+            }
             sharedPreferences.edit().putBoolean("New Reservation", false).apply();
             sharedPreferences.edit().putInt("No. Reservations", 0).apply();
         }
