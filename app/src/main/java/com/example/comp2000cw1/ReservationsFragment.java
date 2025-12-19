@@ -30,7 +30,7 @@ import java.util.List;
 public class ReservationsFragment extends Fragment {
 
     private ReservationAdapter adapter;
-    public static int selectedReservation;
+    public static int selectedReservation = -1;
 
     private Calendar calendar;
     private SimpleDateFormat dateFormat;
@@ -66,6 +66,13 @@ public class ReservationsFragment extends Fragment {
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences("My Prefs", Context.MODE_PRIVATE);
         RecyclerView recyclerView = view.findViewById(R.id.reservationsText1);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+
+        if (sharedPreferences.getBoolean("New Reservation", false) && sharedPreferences.getBoolean("Is Staff", false)) {
+            ((MainActivity) requireActivity()).makeNotification("New reservation(s)", sharedPreferences.getInt("No. Reservations", 0) + " reservations have been added");
+            sharedPreferences.edit().putBoolean("New Reservation", false).apply();
+            sharedPreferences.edit().putInt("No. Reservations", 0).apply();
+        }
 
         //GET TODAYS DATE
         calendar = Calendar.getInstance();
@@ -137,29 +144,40 @@ public class ReservationsFragment extends Fragment {
         removeReservationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseHelper.deleteReservation(selectedReservation);
-                Toast.makeText(requireContext(), "Reservation deleted successfully", Toast.LENGTH_SHORT).show();
-                adapter.setReservations(DatabaseHelper.getAllReservationsByDate(infotext.getText().toString()));
-                selectedReservation = -1;
+                if (selectedReservation != -1) {
+                    DatabaseHelper.deleteReservation(selectedReservation);
+                    Toast.makeText(requireContext(), "Reservation deleted successfully", Toast.LENGTH_SHORT).show();
+                    adapter.setReservations(DatabaseHelper.getAllReservations(name));
+                    selectedReservation = -1;
+                } else {
+                    Toast.makeText(requireContext(), "No reservation selected", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
 
         //DIRECT USER TO EDIT RESERVATION
         editReservationBtn.setOnClickListener(v -> {
-            editReservationFragment newFragment = new editReservationFragment();
-
-            ((MainActivity) requireActivity()).replaceFragment(newFragment);
+            if (selectedReservation != -1) {
+                editReservationFragment newFragment = new editReservationFragment();
+                ((MainActivity) requireActivity()).replaceFragment(newFragment);
+            } else {
+                Toast.makeText(requireContext(), "No reservation selected", Toast.LENGTH_SHORT).show();
+            }
         });
 
 
         //DIRECT USER TO CREATE RESERVATION OR DELETE RESERVATION FOR STAFF
         makeReservationBtn.setOnClickListener(v -> {
             if (sharedPreferences.getBoolean("Is Staff", false)) {
-                DatabaseHelper.deleteReservation(selectedReservation);
-                Toast.makeText(requireContext(), "Reservation deleted successfully", Toast.LENGTH_SHORT).show();
-                adapter.setReservations(DatabaseHelper.getAllReservationsByDate(infotext.getText().toString()));
-                selectedReservation = -1;
+                if (selectedReservation != -1) {
+                    DatabaseHelper.deleteReservation(selectedReservation);
+                    Toast.makeText(requireContext(), "Reservation deleted successfully", Toast.LENGTH_SHORT).show();
+                    adapter.setReservations(DatabaseHelper.getAllReservationsByDate(infotext.getText().toString()));
+                    selectedReservation = -1;
+                } else {
+                    Toast.makeText(requireContext(), "No reservation selected", Toast.LENGTH_SHORT).show();
+                }
             } else {
                 addReservationFragment newFragment = new addReservationFragment();
                 ((MainActivity) requireActivity()).replaceFragment(newFragment);

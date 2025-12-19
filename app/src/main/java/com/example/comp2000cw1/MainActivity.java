@@ -1,11 +1,16 @@
 package com.example.comp2000cw1;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -26,16 +31,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         replaceFragment(new HomeFragment());
 
+
+        //SHARED PREFERENCES
         SharedPreferences sharedPreferences = getSharedPreferences("My Prefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        if (!sharedPreferences.contains("Signed In")) {
+        if (!sharedPreferences.contains("New Reservation")) {
             editor.putBoolean("Signed In", false);
             editor.putString("First Name", "");
             editor.putString("Last Name", "");
             editor.putBoolean("Is Staff", false);
             editor.putBoolean("Push Notifications", false);
             editor.putBoolean("Reservation Changes", false);
-            editor.putBoolean("Reservation Reminders", false);
+            editor.putBoolean("New Reservation", false);
+            editor.putInt("No. Reservations", 0);
             editor.apply();
         }
 
@@ -85,5 +93,36 @@ public class MainActivity extends AppCompatActivity {
         if (fragmentManager.getBackStackEntryCount() > 1) {
             fragmentManager.popBackStack();
         }
+    }
+
+    public void makeNotification(String title, String text){
+        String chanelID = "my_channel";
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(
+                this, chanelID);
+        builder.setSmallIcon(R.drawable.notifications_24)
+                .setContentTitle(title)
+                .setContentText(text)
+                .setAutoCancel(true)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManager notificationManager =
+                (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel notificationChannel = notificationManager.getNotificationChannel(chanelID);
+
+            if (notificationChannel == null) {
+                int importance = NotificationManager.IMPORTANCE_HIGH;
+
+                notificationChannel = new NotificationChannel(
+                        chanelID, "My Notification", importance);
+
+                notificationChannel.setLightColor(Color.BLUE);
+                notificationChannel.enableVibration(true);
+                notificationManager.createNotificationChannel(notificationChannel);
+            }
+        }
+
+        notificationManager.notify(0, builder.build());
     }
 }

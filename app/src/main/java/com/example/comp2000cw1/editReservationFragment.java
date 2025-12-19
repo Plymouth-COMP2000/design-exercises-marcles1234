@@ -32,6 +32,7 @@ public class editReservationFragment extends Fragment {
     Button confirmEdit;
     CalendarView calendar;
     String selectedDate;
+    Boolean dateChanged, timeChanged, guestsChanged;
 
 
 
@@ -59,14 +60,19 @@ public class editReservationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_edit_reservation, container, false);
+
+        //BACK BUTTON
         View backButton = root.findViewById(R.id.back);
         backButton.setOnClickListener(v -> {
             ((MainActivity) requireActivity()).goBack();
         });
 
         String text = "";
+
         TextView reservationDisplay = root.findViewById(R.id.reservationTable);
-        Toast.makeText(requireContext(), "ID = " + selectedReservation, Toast.LENGTH_SHORT).show();
+
+
+        //GET RESERVATION
         DatabaseHelper DatabaseHelper = new DatabaseHelper(requireContext());
         List<DataModelReservations> reservations = Collections.singletonList(DatabaseHelper.getReservationByID(selectedReservation));
         for (DataModelReservations reservation : reservations) {
@@ -74,6 +80,8 @@ public class editReservationFragment extends Fragment {
         }
         reservationDisplay.setText(text);
 
+
+        //TIME SPINNER
         selectTimeList = root.findViewById(R.id.timeEditList);
         String[] times = {"17:00", "17:30", "18:00", "18:30", "19:00"};
         ArrayAdapter<String> timeAdapter = new ArrayAdapter<>(
@@ -84,6 +92,8 @@ public class editReservationFragment extends Fragment {
         timeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         selectTimeList.setAdapter(timeAdapter);
 
+
+        //GUEST SPINNER
         selectGuestsList = root.findViewById(R.id.guestEditList);
         String[] guests = {"1", "2", "3", "4", "5", "6", "7", "8"};
         ArrayAdapter<String> guestAdapter = new ArrayAdapter<>(
@@ -94,21 +104,64 @@ public class editReservationFragment extends Fragment {
         guestAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         selectGuestsList.setAdapter(guestAdapter);
 
+
+        //CALENDAR
         calendar = root.findViewById(R.id.dateEditCalendar);
         calendar.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
             selectedDate = dayOfMonth + "/" + (month + 1) + "/" + year;
         });
+
+        //CONFIRM EDIT BUTTON
         confirmEdit = root.findViewById(R.id.confirmEdit);
         confirmEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //UPDATE RESERVATION
+                DatabaseHelper databaseHelper = new DatabaseHelper(requireContext());
+                DataModelReservations originalReservation = DatabaseHelper.getReservationByID(selectedReservation);
                 DataModelReservations data = new DataModelReservations(
                         selectedDate,
                         selectTimeList.getSelectedItem().toString(),
                         selectGuestsList.getSelectedItem().toString()
                 );
-                DatabaseHelper databaseHelper = new DatabaseHelper(requireContext());
                 databaseHelper.updateReservation(selectedReservation, data);
+
+                //NOTIFICATION DISPLAY LOGIC
+                String updates = "The ";
+                if (!originalReservation.getReservationDate().equals(selectedDate)) {
+                    dateChanged = true;
+                    updates += "date";
+                } else {
+                    dateChanged = false;
+                }
+
+                if (!originalReservation.getReservationTime().equals(selectTimeList.getSelectedItem().toString())) {
+                    if (dateChanged) {
+                        updates += ", ";
+                    }
+                    timeChanged = true;
+                    updates += "time";
+                } else {
+                    timeChanged = false;
+                }
+
+                if (!originalReservation.getReservationGuests().equals(selectGuestsList.getSelectedItem().toString())) {
+                    if (dateChanged || timeChanged) {
+                        updates += " and ";
+                    }
+                    else {
+                        guestsChanged = false;
+                    }
+                    guestsChanged = true;
+                    updates += "guests";
+                }
+                updates += " have been updated on your reservation that was for the: ";
+                updates += originalReservation.getReservationDate();
+
+                ((MainActivity) requireActivity()).makeNotification("Reservation Update", updates);
+
+                ReservationsFragment newFragment = new ReservationsFragment();
+                ((MainActivity) requireActivity()).replaceFragment(newFragment);
             }
         });
         return root;

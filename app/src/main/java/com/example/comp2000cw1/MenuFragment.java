@@ -115,11 +115,16 @@ public class MenuFragment extends Fragment {
         });
 
         editItemBtn.setOnClickListener(v -> {
-            editMenuFragment newFragment = new editMenuFragment();
-            Bundle bundle = new Bundle();
-            bundle.putString("dishName", dishNameText.getText().toString());
-            newFragment.setArguments(bundle);
-            ((MainActivity) requireActivity()).replaceFragment(newFragment);
+            String dishName = dishNameText.getText().toString();
+            if (dishName.equals("Dish title")) {
+                Toast.makeText(requireContext(), "No dish selected", Toast.LENGTH_SHORT).show();
+            } else {
+                editMenuFragment newFragment = new editMenuFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("dishName", dishNameText.getText().toString());
+                newFragment.setArguments(bundle);
+                ((MainActivity) requireActivity()).replaceFragment(newFragment);
+            }
         });
 
         View.OnClickListener showDishScroll = v -> {

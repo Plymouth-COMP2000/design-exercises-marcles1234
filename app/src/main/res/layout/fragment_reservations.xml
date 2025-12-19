@@ -107,21 +107,9 @@
         app:layout_constraintStart_toStartOf="@id/infoText"
         app:layout_constraintEnd_toEndOf="@+id/infoText"
         app:layout_constraintTop_toTopOf="@id/infoText"
-        app:layout_constraintBottom_toBottomOf="@id/infoText"
+        app:layout_constraintBottom_toTopOf="@id/editReservation"
         />
 
-    <Button
-        android:id="@+id/addReservation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Make a Reservation"
-        android:layout_marginStart="36dp"
-        android:layout_marginEnd="36dp"
-        style="@style/buttons"
-        app:layout_constraintTop_toBottomOf="@id/reservationsText1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
     <Button
         android:id="@+id/editReservation"
         android:layout_width="match_parent"
@@ -131,9 +119,11 @@
         android:layout_marginStart="36dp"
         android:layout_marginEnd="36dp"
         style="@style/buttons"
+        app:layout_constraintTop_toBottomOf="@id/reservationsText1"
         app:layout_constraintStart_toStartOf="@id/reservationsText1"
         app:layout_constraintEnd_toEndOf="@id/reservationsText1"
         app:layout_constraintBottom_toTopOf="@id/removeReservation"/>
+
     <Button
         android:id="@+id/removeReservation"
         android:layout_width="match_parent"
@@ -143,8 +133,22 @@
         android:layout_marginStart="36dp"
         android:layout_marginEnd="36dp"
         style="@style/buttons"
+        app:layout_constraintTop_toBottomOf="@id/editReservation"
         app:layout_constraintStart_toStartOf="@id/reservationsText1"
         app:layout_constraintEnd_toEndOf="@id/reservationsText1"
-        app:layout_constraintBottom_toBottomOf="@id/reservationsText1"/>
+        app:layout_constraintBottom_toBottomOf="@id/infoText"/>
+    <Button
+        android:id="@+id/addReservation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Make a Reservation"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="36dp"
+        style="@style/buttons"
+        app:layout_constraintTop_toBottomOf="@id/infoText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

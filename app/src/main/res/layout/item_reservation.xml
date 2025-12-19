@@ -14,9 +14,13 @@
         android:id="@+id/reservationName"
         android:textSize="16sp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:textColor="@color/text"
+        android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toStartOf="@id/reservationDate"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <TextView
         android:id="@+id/reservationId"
@@ -33,19 +37,18 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:gravity="center"
-        android:padding="12dp"
+        android:padding="4dp"
         android:textColor="@color/text"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/reservationTime"
         app:layout_constraintStart_toEndOf="@id/reservationName"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/reservationTime"
         android:textSize="16sp"
-        android:padding="12dp"
+        android:padding="4dp"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:textColor="@color/text"
@@ -58,7 +61,7 @@
     <TextView
         android:id="@+id/reservationGuests"
         android:textSize="16sp"
-        android:padding="12dp"
+        android:padding="4dp"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:textColor="@color/text"

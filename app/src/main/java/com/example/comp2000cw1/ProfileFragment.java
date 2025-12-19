@@ -39,7 +39,7 @@ public class ProfileFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    Switch pushNotifications, changeNotifications, reminderNotifications;;
+    Switch pushNotifications, reservationNotifications;;
     Button btn;
 
     // TODO: Rename and change types of parameters
@@ -84,21 +84,23 @@ public class ProfileFragment extends Fragment {
 
         btn = root.findViewById(R.id.btn);
         pushNotifications = root.findViewById(R.id.pushNotifications);
-        changeNotifications = root.findViewById(R.id.changeNotifications);
-        reminderNotifications = root.findViewById(R.id.reminderNotifications);
+        reservationNotifications = root.findViewById(R.id.reservationNotifications);
 
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences("My Prefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        if (sharedPreferences.getBoolean("Is Staff", false)) {
+            reservationNotifications.setText("New Reservations");
+        } else {
+            reservationNotifications.setText("Reservation Changes");
+        }
+
         pushNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
             editor.putBoolean("Push Notifications", isChecked);
             editor.apply();
         });
-        changeNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        reservationNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
             editor.putBoolean("Reservation Changes", isChecked);
-            editor.apply();
-        });
-        reminderNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            editor.putBoolean("Reservation Reminders", isChecked);
             editor.apply();
         });
 
@@ -114,7 +116,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                makeNotification();
+                ((MainActivity) requireActivity()).makeNotification("My notification", "New approval request!");
                 Toast.makeText(requireContext(), "Name: " + sharedPreferences.getString("First Name", "No name"), Toast.LENGTH_SHORT).show();
                 SharedPreferences sharedPreferences = requireContext().getSharedPreferences("My Prefs", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -124,36 +126,5 @@ public class ProfileFragment extends Fragment {
             }
         });
         return root;
-    }
-
-    public void makeNotification(){
-        String chanelID = "my_channel";
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(
-                requireContext(), chanelID);
-        builder.setSmallIcon(R.drawable.notifications_24)
-                .setContentTitle("My notification")
-                .setContentText("New approval request!")
-                .setAutoCancel(true)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-        NotificationManager notificationManager =
-                (NotificationManager) requireContext().getSystemService(Context.NOTIFICATION_SERVICE);
-
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            NotificationChannel notificationChannel = notificationManager.getNotificationChannel(chanelID);
-
-            if (notificationChannel == null) {
-                int importance = NotificationManager.IMPORTANCE_HIGH;
-
-                notificationChannel = new NotificationChannel(
-                        chanelID, "My Notification", importance);
-
-                notificationChannel.setLightColor(Color.BLUE);
-                notificationChannel.enableVibration(true);
-                notificationManager.createNotificationChannel(notificationChannel);
-            }
-        }
-
-        notificationManager.notify(0, builder.build());
     }
 }

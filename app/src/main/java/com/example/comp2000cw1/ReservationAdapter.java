@@ -1,5 +1,7 @@
 package com.example.comp2000cw1;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +39,16 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
     public void onBindViewHolder(@NonNull ReservationViewHolder holder, int position) {
         DataModelReservations reservation = reservations.get(position);
         holder.idTextView.setText(String.valueOf(reservation.getReservationId()));
-        holder.nameTextView.setText("");
+        SharedPreferences sharedPreferences = holder.itemView.getContext().getSharedPreferences("My Prefs", Context.MODE_PRIVATE);
+        if (sharedPreferences.getBoolean("Is Staff", false)) {
+            holder.nameTextView.setText(reservation.getReservationName());
+            holder.nameTextView.setTextSize(12);
+            holder.dateTextView.setTextSize(12);
+            holder.timeTextView.setTextSize(12);
+            holder.guestsTextView.setTextSize(12);
+        } else {
+            holder.nameTextView.setText("");
+        }
         holder.dateTextView.setText(reservation.getReservationDate());
         holder.timeTextView.setText(reservation.getReservationTime());
         holder.guestsTextView.setText(reservation.getReservationGuests());

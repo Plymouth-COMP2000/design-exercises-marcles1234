@@ -103,6 +103,10 @@ public class addReservationFragment extends Fragment {
                 long success = databaseHelper.addReservation(data);
                 if(success != -1) {
                     Toast.makeText(requireContext(), "Reservation added successfully", Toast.LENGTH_SHORT).show();
+                    sharedPreferences.edit().putBoolean("New Reservation", true).apply();
+                    sharedPreferences.edit().putInt("No. Reservations", sharedPreferences.getInt("No. Reservations", 0) + 1).apply();
+                    ReservationsFragment newFragment = new ReservationsFragment();
+                    ((MainActivity) requireActivity()).replaceFragment(newFragment);
                 } else {
                     Toast.makeText(requireContext(), "Error adding reservation", Toast.LENGTH_SHORT).show();
                 }
