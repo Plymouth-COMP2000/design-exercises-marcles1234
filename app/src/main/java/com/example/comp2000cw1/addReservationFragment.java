@@ -23,45 +23,17 @@ public class addReservationFragment extends Fragment {
     Button reserveButton;
     String selectedDate;
 
-
-
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
-    public addReservationFragment() {
-        // Required empty public constructor
-    }
-
-    public static addReservationFragment newInstance(String param1, String param2) {
-        addReservationFragment fragment = new addReservationFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //BACK BUTTON
         View root = inflater.inflate(R.layout.fragment_add_reservation, container, false);
         View backButton = root.findViewById(R.id.back);
         backButton.setOnClickListener(v -> {
             ((MainActivity) requireActivity()).goBack();
         });
 
+        //TIME SPINNER
         selectTimeList = root.findViewById(R.id.selectTimeList);
         String[] times = {"17:00", "17:30", "18:00", "18:30", "19:00"};
         ArrayAdapter<String> timeAdapter = new ArrayAdapter<>(
@@ -72,6 +44,7 @@ public class addReservationFragment extends Fragment {
         timeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         selectTimeList.setAdapter(timeAdapter);
 
+        //GUEST SPINNER
         selectGuestsList = root.findViewById(R.id.selectGuestsList);
         String[] guests = {"1", "2", "3", "4", "5", "6", "7", "8"};
         ArrayAdapter<String> guestAdapter = new ArrayAdapter<>(
@@ -82,13 +55,19 @@ public class addReservationFragment extends Fragment {
         guestAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         selectGuestsList.setAdapter(guestAdapter);
 
-        calendar = root.findViewById(R.id.calendar);
         reserveButton = root.findViewById(R.id.reserveButton);
+
+        //CALENDAR
+        calendar = root.findViewById(R.id.calendar);
         calendar.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
             selectedDate = dayOfMonth + "/" + (month + 1) + "/" + year;
         });
+
+        //SHARED PREFS
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences("My Prefs", Context.MODE_PRIVATE);
         String fullName = sharedPreferences.getString("First Name", "") + " " + sharedPreferences.getString("Last Name", "");
+
+        //RESERVE BUTTON
         reserveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,9 +75,7 @@ public class addReservationFragment extends Fragment {
                         fullName,
                         selectedDate,
                         selectTimeList.getSelectedItem().toString(),
-                        selectGuestsList.getSelectedItem().toString()
-
-                );
+                        selectGuestsList.getSelectedItem().toString());
                 DatabaseHelper databaseHelper = new DatabaseHelper(requireContext());
                 long success = databaseHelper.addReservation(data);
                 if(success != -1) {

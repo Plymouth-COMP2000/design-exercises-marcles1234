@@ -187,6 +187,7 @@ public class ReservationsFragment extends Fragment {
         });
     }
 
+    //UPDATE RESERVATION VIEW WHEN DATE CHANGES
     private void updateReservationFrag() {
         String newDate = dateFormat.format(calendar.getTime());
         infotext.setText(newDate);

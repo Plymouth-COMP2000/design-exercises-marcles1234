@@ -17,16 +17,19 @@ import java.util.List;
 public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.ReservationViewHolder> {
     private List<DataModelReservations> reservations;
 
+    //CONSTRUCT ADAPTER
     public ReservationAdapter(List<DataModelReservations> reservations, OnItemClickListener listener) {
         this.reservations = reservations;
         this.listener = listener;
     }
 
+    //UPDATE IF NEEDED
     public void setReservations(List<DataModelReservations> newReservations) {
         this.reservations = newReservations;
         notifyDataSetChanged();
     }
 
+    //INFLATE RESERVATION
     @NonNull
     @Override
     public ReservationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -35,11 +38,13 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
         return new ReservationViewHolder(view);
     }
 
+    //SET DATA TO RESPECTIVE VIEWS
     @Override
     public void onBindViewHolder(@NonNull ReservationViewHolder holder, int position) {
         DataModelReservations reservation = reservations.get(position);
         holder.idTextView.setText(String.valueOf(reservation.getReservationId()));
         SharedPreferences sharedPreferences = holder.itemView.getContext().getSharedPreferences("My Prefs", Context.MODE_PRIVATE);
+        //DECREASE TEXT SIZE AND DISPLAY NAME IF STAFF
         if (sharedPreferences.getBoolean("Is Staff", false)) {
             holder.nameTextView.setText(reservation.getReservationName());
             holder.nameTextView.setTextSize(12);
@@ -58,7 +63,7 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
         });
     }
 
-
+    //SIZE
     @Override
     public int getItemCount() {
         return reservations.size();
@@ -68,6 +73,7 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
         public TextView nameTextView, idTextView, dateTextView, timeTextView, guestsTextView;
         public Button selectButton;
 
+        //FIND VIEWS IN HOLDER
         public ReservationViewHolder(@NonNull View itemView) {
             super(itemView);
             idTextView = itemView.findViewById(R.id.reservationId);
@@ -79,6 +85,7 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
         }
     }
 
+    //RESPECTIVE BUTTON SELECTION LISTENER
     public interface OnItemClickListener {
         void onItemClick(DataModelReservations reservation);
     }

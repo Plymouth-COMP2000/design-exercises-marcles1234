@@ -5,6 +5,7 @@ public class DataModelReservations {
     int reservationId;
     String reservationName, reservationDate, reservationTime, reservationGuests;
 
+    //RESERVATIONS DATAMODEL (NAME, DATE, TIME, GUESTS)
     public DataModelReservations(String reservationName, String reservationDate, String reservationTime, String reservationGuests) {
         this.reservationName = reservationName;
         this.reservationDate = reservationDate;
@@ -12,12 +13,14 @@ public class DataModelReservations {
         this.reservationGuests = reservationGuests;
     }
 
+    //RESERVATIONS DATAMODEL (DATE, TIME, GUESTS)
     public DataModelReservations(String reservationDate, String reservationTime, String reservationGuests) {
         this.reservationDate = reservationDate;
         this.reservationTime = reservationTime;
         this.reservationGuests = reservationGuests;
     }
 
+    //RESERVATIONS DATAMODEL (ID, NAME, DATE, TIME, GUESTS)
     public DataModelReservations(int reservationId, String reservationName, String reservationDate, String reservationTime, String reservationGuests) {
         this.reservationId = reservationId;
         this.reservationName = reservationName;

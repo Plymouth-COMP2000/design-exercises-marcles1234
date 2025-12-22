@@ -25,6 +25,7 @@ public class DishView extends RecyclerView.Adapter<DishView.DishViewHolder> {
         this.listener = listener;
     }
 
+    //INFLATE LAYOUT
     @NonNull
     @Override
     public DishViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -33,6 +34,8 @@ public class DishView extends RecyclerView.Adapter<DishView.DishViewHolder> {
         return new DishViewHolder(view);
     }
 
+
+    //BUTTON CLICK LISTENER AT GIVEN POSITION
     @Override
     public void onBindViewHolder(@NonNull DishViewHolder holder, int position) {
         String dishName = dishes.get(position);

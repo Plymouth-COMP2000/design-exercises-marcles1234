@@ -3,6 +3,7 @@ package com.example.comp2000cw1;
 public class DataModel {
     String dishName, dishType, dishDescription, dishPrice, dishAllergens, dishImage;
 
+    //MENU DATAMODEL
     public DataModel(String dishName, String dishType, String dishDescription,
                      String dishPrice, String dishAllergens, String dishImage) {
         this.dishName = dishName;

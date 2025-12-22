@@ -24,11 +24,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link editReservationFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class editReservationFragment extends Fragment {
 
     Spinner selectTimeList, selectGuestsList;
@@ -37,26 +32,8 @@ public class editReservationFragment extends Fragment {
     String selectedDate;
     Boolean dateChanged, timeChanged, guestsChanged;
 
-
-
-
-
     public editReservationFragment() {
         // Required empty public constructor
-    }
-
-    public static editReservationFragment newInstance(String param1, String param2) {
-        editReservationFragment fragment = new editReservationFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
@@ -71,7 +48,6 @@ public class editReservationFragment extends Fragment {
         });
 
         String text = "";
-
         TextView reservationDisplay = root.findViewById(R.id.reservationTable);
 
 

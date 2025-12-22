@@ -41,6 +41,8 @@ public class SignInFragment extends Fragment {
     private void getUser(String username, String password) {
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences("My Prefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        //API FOR USER DETAILS
         String url = "http://10.240.72.69/comp2000/coursework/read_user/{10861908}/" + username;
         RequestQueue queue = Volley.newRequestQueue(requireContext());
         StringRequest request = new StringRequest(
@@ -48,12 +50,14 @@ public class SignInFragment extends Fragment {
                 url,
                 response -> {
                     try {
+                        //GET USER DETAILS AS JSON OBJECT
                         JSONObject jsonObject = new JSONObject(response);
                         JSONObject user = jsonObject.getJSONObject("user");
                         String storedPassword = user.getString("password");
                         String userType = user.getString("usertype");
                         String storedFirstName = user.getString("firstname");
                         String storedLastName = user.getString("lastname");
+                        //DETAILS MATCH?
                         if (storedPassword.equals(password)) {
                             editor.putBoolean("Signed In", true);
                             if (userType.equals("staff")) {

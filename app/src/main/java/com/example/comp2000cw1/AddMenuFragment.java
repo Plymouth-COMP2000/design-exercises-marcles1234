@@ -16,41 +16,11 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 public class AddMenuFragment extends Fragment {
-    
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
-    public AddMenuFragment() {
-        // Required empty public constructor
-    }
-
-
-    public static AddMenuFragment newInstance(String param1, String param2) {
-        AddMenuFragment fragment = new AddMenuFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     EditText editDishName, editDishDescription, editDishPrice, editDishAllergens, editDishImage;
     Spinner editDishType;
     Button addButton;
     boolean dishTypeValidMarker;
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,8 +40,7 @@ public class AddMenuFragment extends Fragment {
         ArrayAdapter<String> timeAdapter = new ArrayAdapter<>(
                 requireContext(),
                 R.layout.spinner_template,
-                categories
-        );
+                categories);
         timeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         editDishType.setAdapter(timeAdapter);
 

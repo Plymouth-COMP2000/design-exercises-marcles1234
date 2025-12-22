@@ -16,8 +16,7 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "restaurant.db";
-
+    //MENU VARIABLES
     public static final String MENU = "menu";
     public static final String DISH_NAME = "dish_name";
     public static final String DISH_TYPE = "dish_type";
@@ -27,7 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DISH_ALLERGENS = "dish_allergens";
     public static final String DISH_IMAGE = "dish_image";
 
-
+    //RESERVATION VARIABLES
     public static final String RESERVATIONS = "reservations";
     public static final String RESERVATION_ID = "reservation_id";
     public static final String RESERVATION_NAME = "reservation_name";
@@ -35,11 +34,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String RESERVATION_TIME = "reservation_time";
     public static final String RESERVATION_GUESTS = "reservation_guests";
 
-
+    //CONNECT TO DATABASE
     public DatabaseHelper(@Nullable Context context) {
         super(context, "DATABASE_NAME.db", null, 1);
     }
 
+
+    //CREATE TABLES IF THEY DON'T EXIST
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTableMenu = "CREATE TABLE " + MENU + "(" +
@@ -60,6 +61,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(createTableReservations);
     }
 
+    //UPDATE LOGIC
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + MENU);

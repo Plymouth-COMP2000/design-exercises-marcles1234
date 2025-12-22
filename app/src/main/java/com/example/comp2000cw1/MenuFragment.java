@@ -23,47 +23,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MenuFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MenuFragment extends Fragment {
-
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
 
     public MenuFragment() {
         // Required empty public constructor
-    }
-
-    public static MenuFragment newInstance(String param1, String param2) {
-        MenuFragment fragment = new MenuFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     TextView dishNameText, dishDescriptionText, dishPriceText, dishAllergensText, dishAllergensText1;
     ImageView dishImage;
     Button starterButton, pastaButton, pizzaButton, soupButton, sidesButton, additemBtn, editItemBtn;
     RecyclerView dishScroll;
-    private String currentDish;
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,6 +40,7 @@ public class MenuFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_menu, container, false);
 
+        //BACK BUTTON
         View backButton = root.findViewById(R.id.back);
         backButton.setOnClickListener(v -> {
             ((MainActivity) requireActivity()).goBack();
@@ -83,6 +53,7 @@ public class MenuFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //VIEWS
         additemBtn = view.findViewById(R.id.additem);
         editItemBtn = view.findViewById(R.id.edititem);
         dishNameText=view.findViewById(R.id.dishNameText);
@@ -98,6 +69,7 @@ public class MenuFragment extends Fragment {
         sidesButton=view.findViewById(R.id.sidesButton);
         dishScroll=view.findViewById(R.id.dishScroll);
 
+        //CHECK FOR STAFF - ADD/EDIT BUTTONS ADDED
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences("My Prefs", Context.MODE_PRIVATE);
         if (sharedPreferences.getBoolean("Is Staff", false)) {
             additemBtn.setVisibility(View.VISIBLE);
@@ -107,13 +79,14 @@ public class MenuFragment extends Fragment {
             editItemBtn.setVisibility(View.INVISIBLE);
         }
 
-
+        //ADD ITEM BUTTON
         additemBtn.setOnClickListener(v -> {
             AddMenuFragment newFragment = new AddMenuFragment();
 
             ((MainActivity) requireActivity()).replaceFragment(newFragment);
         });
 
+        //EDIT ITEM BUTTON
         editItemBtn.setOnClickListener(v -> {
             String dishName = dishNameText.getText().toString();
             if (dishName.equals("Dish title")) {
@@ -127,6 +100,7 @@ public class MenuFragment extends Fragment {
             }
         });
 
+        //DISH TYPE SCROLL
         View.OnClickListener showDishScroll = v -> {
             dishScroll.setVisibility(View.VISIBLE);
             dishScroll.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -145,6 +119,7 @@ public class MenuFragment extends Fragment {
                 category = "";
             }
 
+            //DISPLAY DISHES BASED ON TYPE VIA 'DishView'
             DatabaseHelper databaseHelper = new DatabaseHelper(requireContext());
             List<String> dishes = databaseHelper.getDishesByType(category);
             DishView adapter = new DishView(dishes, dishName -> {
@@ -159,14 +134,13 @@ public class MenuFragment extends Fragment {
                 dishDescriptionText.setText(itemData.getDishDescription());
                 dishPriceText.setText(itemData.getDishPrice());
                 dishAllergensText.setText(itemData.getDishAllergens());
-                // Get the resource ID dynamically
                 int resId = getResources().getIdentifier(itemData.getDishImage(), "drawable", requireContext().getPackageName());
                 dishImage.setImageResource(resId);
-
             });
             dishScroll.setAdapter(adapter);
         };
 
+        //MAKE DISH SCROLL VISIBLE WHEN BUTTON CLICKED
         starterButton.setOnClickListener(showDishScroll);
         pastaButton.setOnClickListener(showDishScroll);
         pizzaButton.setOnClickListener(showDishScroll);

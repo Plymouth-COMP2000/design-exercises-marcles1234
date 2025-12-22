@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
 
+    //SET VIEW AND INITIALISE HOME FRAGMENT
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             editor.apply();
         }
 
-
+        //NAVIGATION BAR LOGIC
         binding.navBar.setOnItemSelectedListener( item -> {
 
             int itemId = item.getItemId();
@@ -79,15 +80,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //FUNCTION TO SWAP FRAGMENTS
     public void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout,fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-
     }
 
+    //FUNCTION FOR BACK BUTTON
     public void goBack() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (fragmentManager.getBackStackEntryCount() > 1) {
@@ -95,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //FUNCTION TO CALL NOTIFICATIONS
     public void makeNotification(String title, String text){
         String chanelID = "my_channel";
         NotificationCompat.Builder builder = new NotificationCompat.Builder(

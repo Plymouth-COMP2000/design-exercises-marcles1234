@@ -23,31 +23,17 @@ public class editMenuFragment extends Fragment {
     public editMenuFragment() {
         // Required empty public constructor
     }
-    public static editMenuFragment newInstance(String param1, String param2) {
-        editMenuFragment fragment = new editMenuFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-
 
     EditText editDishName, editDishDescription, editDishPrice, editDishAllergens, editDishImage;
     Spinner editDishType;
     Button updateMenuButton, deleteMenuButton;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_edit_menu, container, false);
 
+        //BACK BUTTON
         View backButton = root.findViewById(R.id.back);
         backButton.setOnClickListener(v -> {
             ((MainActivity) requireActivity()).goBack();
@@ -100,7 +86,9 @@ public class editMenuFragment extends Fragment {
         timeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         editDishType.setAdapter(timeAdapter);
 
+        //UPDATE MENU BUTTON
         updateMenuButton.setOnClickListener(v -> {
+            //CREATE DATAMODEL
             DataModel data = new DataModel(
                     editDishName.getText().toString(),
                     editDishType.getSelectedItem().toString(),
@@ -118,6 +106,7 @@ public class editMenuFragment extends Fragment {
             Toast.makeText(requireContext(), "Dish updated", Toast.LENGTH_SHORT).show();
         });
 
+        //DELETE MENU ITEM BUTTON
         deleteMenuButton.setOnClickListener(v -> {
             databaseHelper.deleteDish(dishName);
             Toast.makeText(requireContext(), "Dish deleted successfully", Toast.LENGTH_SHORT).show();
