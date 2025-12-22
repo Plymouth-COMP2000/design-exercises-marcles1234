@@ -22,7 +22,8 @@ public class AddMenuFragment extends Fragment {
     public AddMenuFragment() {
         // Required empty public constructor
     }
-    
+
+
     public static AddMenuFragment newInstance(String param1, String param2) {
         AddMenuFragment fragment = new AddMenuFragment();
         Bundle args = new Bundle();
@@ -34,6 +35,7 @@ public class AddMenuFragment extends Fragment {
 
     EditText editDishName, editDishType, editDishDescription, editDishPrice, editDishAllergens, editDishImage;
     Button addButton;
+    boolean dishTypeValidMarker;
 
 
     @Override
@@ -48,13 +50,15 @@ public class AddMenuFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_add_menu, container, false);
 
+        //BACK BUTTON
         View backButton = root.findViewById(R.id.back);
         backButton.setOnClickListener(v -> {
             ((MainActivity) requireActivity()).goBack();
         });
+
+        String[] categories = {"Starter", "Pasta", "Pizza", "Soup", "Sides"};
 
         editDishName=root.findViewById(R.id.dishName);
         editDishType=root.findViewById(R.id.dishType);
@@ -64,9 +68,11 @@ public class AddMenuFragment extends Fragment {
         editDishImage=root.findViewById(R.id.dishImage);
         addButton=root.findViewById(R.id.addMenuButton);
 
+        //ADD DISH BUTTON
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dishTypeValidMarker = false;
                 DataModel data = new DataModel(
                         editDishName.getText().toString(),
                         editDishType.getText().toString(),
@@ -74,12 +80,28 @@ public class AddMenuFragment extends Fragment {
                         editDishPrice.getText().toString(),
                         editDishAllergens.getText().toString(),
                         editDishImage.getText().toString());
-                DatabaseHelper databaseHelper = new DatabaseHelper(requireContext());
-                boolean success = databaseHelper.addDish(data);
-                if(success) {
-                    Toast.makeText(requireContext(), "Dish added successfully", Toast.LENGTH_SHORT).show();
+
+                for (String category : categories) {
+                    if (editDishType.getText().toString().equals(category)) {;
+                        dishTypeValidMarker = true;
+                        break;
+                    }
+                }
+                if (!dishTypeValidMarker) {
+                    Toast.makeText(requireContext(), editDishType.getText().toString() + " is a invalid category", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(requireContext(), "Error adding dish", Toast.LENGTH_SHORT).show();
+                    DatabaseHelper databaseHelper = new DatabaseHelper(requireContext());
+                    DataModel existingDish = databaseHelper.getDishByName(data.getDishName());
+                    if (existingDish != null) {
+                        Toast.makeText(requireContext(), editDishName.getText().toString() + " already exists", Toast.LENGTH_SHORT).show();
+                    } else {
+                        boolean success = databaseHelper.addDish(data);
+                        if (success) {
+                            Toast.makeText(requireContext(), "Dish added successfully", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(requireContext(), "Error adding dish", Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 }
             }
 
