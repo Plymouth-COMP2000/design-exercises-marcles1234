@@ -85,17 +85,16 @@
                 app:layout_constraintEnd_toEndOf="@id/container"
                 app:layout_constraintTop_toBottomOf="@id/updateMenuButton"/>
 
-            <EditText
+            <Spinner
                 android:id="@+id/dishType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginTop="20dp"
-                android:padding="12dp"
                 android:hint="Enter dish type"
                 android:background="@drawable/textview_border"
-                android:drawableRight="@drawable/pen"
+                android:textColor="@color/text"
                 app:layout_constraintStart_toStartOf="@id/container"
                 app:layout_constraintEnd_toEndOf="@id/container"
                 app:layout_constraintTop_toBottomOf="@id/dishName"/>

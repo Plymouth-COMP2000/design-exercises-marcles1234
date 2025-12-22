@@ -1,5 +1,7 @@
 package com.example.comp2000cw1;
 
+import static com.example.comp2000cw1.ReservationsFragment.selectedReservation;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,8 +11,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 public class editMenuFragment extends Fragment {
@@ -28,10 +32,9 @@ public class editMenuFragment extends Fragment {
 
 
 
-    EditText editDishName, editDishType, editDishDescription, editDishPrice, editDishAllergens, editDishImage;
+    EditText editDishName, editDishDescription, editDishPrice, editDishAllergens, editDishImage;
+    Spinner editDishType;
     Button updateMenuButton, deleteMenuButton;
-
-    boolean dishTypeValidMarker;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,7 +60,6 @@ public class editMenuFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         editDishName = view.findViewById(R.id.dishName);
-        editDishType = view.findViewById(R.id.dishType);
         editDishDescription = view.findViewById(R.id.dishDescription);
         editDishPrice = view.findViewById(R.id.dishPrice);
         editDishAllergens = view.findViewById(R.id.dishAllergens);
@@ -70,40 +72,50 @@ public class editMenuFragment extends Fragment {
         DataModel itemData = databaseHelper.getDishByName(dishName);
 
         editDishName.setText(itemData.getDishName());
-        editDishType.setText(itemData.getDishType());
         editDishDescription.setText(itemData.getDishDescription());
         editDishPrice.setText(itemData.getDishPrice());
         editDishAllergens.setText(itemData.getDishAllergens());
         editDishImage.setText(itemData.getDishImage());
 
+
+        //TYPE SPINNER
+        editDishType = view.findViewById(R.id.dishType);
+        String currentTime = (itemData).getDishType();
         String[] categories = {"Starter", "Pasta", "Pizza", "Soup", "Sides"};
+        for (int i = 0; i < categories.length; i++) {
+            if (categories[i].equals(currentTime)) {
+                int temp = i;
+                for (int j = 0; j < i; j++) {
+                    categories[temp] = categories[temp-1];
+                    temp--;
+                }
+            }
+        }
+        categories[0] = currentTime;
+        ArrayAdapter<String> timeAdapter = new ArrayAdapter<>(
+                requireContext(),
+                R.layout.spinner_template,
+                categories
+        );
+        timeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        editDishType.setAdapter(timeAdapter);
 
         updateMenuButton.setOnClickListener(v -> {
             DataModel data = new DataModel(
                     editDishName.getText().toString(),
-                    editDishType.getText().toString(),
+                    editDishType.getSelectedItem().toString(),
                     editDishDescription.getText().toString(),
                     editDishPrice.getText().toString(),
                     editDishAllergens.getText().toString(),
                     editDishImage.getText().toString());
 
-            for (String category : categories) {
-                if (editDishType.getText().toString().equals(category)) {;
-                    dishTypeValidMarker = true;
-                    break;
-                }
+            DataModel existingDish = databaseHelper.getDishByName(data.getDishName());
+            if (existingDish != null && !existingDish.getDishName().equals(dishName)) {
+                Toast.makeText(requireContext(), editDishName.getText().toString() + " already exists", Toast.LENGTH_SHORT).show();
+                return;
             }
-            if (!dishTypeValidMarker) {
-                Toast.makeText(requireContext(), editDishType.getText().toString() + " is a invalid category", Toast.LENGTH_SHORT).show();
-            } else {
-                DataModel existingDish = databaseHelper.getDishByName(data.getDishName());
-                if (existingDish != null) {
-                    Toast.makeText(requireContext(), editDishName.getText().toString() + " already exists", Toast.LENGTH_SHORT).show();
-                } else {
-                    databaseHelper.updateDish(dishName, data);
-                    Toast.makeText(requireContext(), "Dish updated successfully", Toast.LENGTH_SHORT).show();
-                }
-            }
+            databaseHelper.updateDish(dishName, data);
+            Toast.makeText(requireContext(), "Dish updated", Toast.LENGTH_SHORT).show();
         });
 
         deleteMenuButton.setOnClickListener(v -> {
