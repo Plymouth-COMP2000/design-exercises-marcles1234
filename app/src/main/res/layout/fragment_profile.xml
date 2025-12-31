@@ -1,0 +1,120 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeFragment"
+    android:background="#4C6444">
+
+    <TextView
+        android:id="@+id/profileTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Profile"
+        android:textStyle="bold"
+        android:textColor="@color/title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="20sp"
+        android:textSize="30sp" />
+
+    <Button
+        style="@style/backButton"
+        android:id="@+id/back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/profileScrollView"/>
+
+    <ScrollView
+        android:id="@+id/profileScrollView"
+        android:fillViewport="true"
+        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/textview_border"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@id/profileTitle"
+        app:layout_constraintBottom_toBottomOf="@id/halfwayGuideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/profileText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Profile info here\n\n\n\n\n\n\n\n\n\n\n\n\n\nnwejn"
+            android:padding="20dp"
+            android:textColor="@color/text"
+            app:layout_constraintTop_toTopOf="@id/profileScrollView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/profileScrollView" />
+
+    </ScrollView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/halfwayGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4" />
+
+    <ScrollView
+        android:id="@+id/SettingsScrollView"
+        android:fillViewport="true"
+        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/textview_border"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@id/profileScrollView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/settingsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/settingsTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Settings: "
+                android:layout_margin="20dp"
+                android:textColor="@color/text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/settingsContainer" />
+
+            <Switch
+                android:id="@+id/reservationNotifications"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reservation"
+                android:layout_margin="20dp"
+                android:textSize="14sp"
+                android:textColor="@color/text"
+                app:layout_constraintTop_toBottomOf="@id/settingsTitle"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/signOutButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="36dp"
+                android:layout_marginEnd="36dp"
+                android:text="Sign Out"
+                style="@style/buttons"
+                app:layout_constraintTop_toBottomOf="@id/reservationNotifications"
+                app:layout_constraintBottom_toBottomOf="@id/settingsContainer"
+                app:layout_constraintStart_toStartOf="@id/settingsContainer"
+                app:layout_constraintEnd_toEndOf="@id/settingsContainer" />/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MenuFragment"
+    android:background="#4C6444">
+
+    <TextView
+        android:id="@+id/menuTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_margin="20sp"
+        android:text="Menu"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/title"/>
+
+    <Button
+        style="@style/backButton"
+        android:id="@+id/back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/dishTypeScroll"/>
+
+    <Button
+        android:id="@+id/additem"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/transparent"
+        android:drawableRight="@drawable/add"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@id/back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/dishTypeScroll"/>
+
+    <Button
+        android:id="@+id/edititem"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/transparent"
+        android:drawableRight="@drawable/pen"
+        android:drawableTint="#A28B7A"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@id/additem"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/dishTypeScroll"/>
+
+
+    <HorizontalScrollView
+        android:id="@+id/dishTypeScroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        android:scrollbars="none"
+        android:background="@drawable/textview_border"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/menuTitle">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent">
+
+            <Button
+                android:id="@+id/starterButton"
+                style="@style/buttonformat"
+                android:text="Starter" />
+
+            <Button
+                android:id="@+id/pastaButton"
+                style="@style/buttonformat"
+                android:text="Pasta" />
+
+            <Button
+                android:id="@+id/pizzaButton"
+                style="@style/buttonformat"
+                android:text="Pizza" />
+
+            <Button
+                android:id="@+id/sidesButton"
+                style="@style/buttonformat"
+                android:text="Sides" />
+
+            <Button
+                android:id="@+id/soupButton"
+                style="@style/buttonformat"
+                android:text="Dessert" />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/menuScroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/textview_border"
+        android:paddingBottom="6dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dishTypeScroll"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/menuScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/dishScroll"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scrollbars="none"
+                android:background="@drawable/textview_border"
+                android:padding="16dp"
+                android:visibility="invisible"
+                app:layout_constraintTop_toTopOf="@id/menuScrollView"
+                app:layout_constraintStart_toStartOf="@id/menuScrollView"
+                app:layout_constraintEnd_toEndOf="@+id/menuScrollView"/>
+
+            <TextView
+                android:id="@+id/dishNameText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="Dish title"
+                android:padding="16dp"
+                android:textColor="@color/text"
+                android:visibility="invisible"
+                app:layout_constraintTop_toBottomOf="@id/dishScroll"
+                app:layout_constraintStart_toStartOf="@id/menuScrollView"
+                app:layout_constraintEnd_toStartOf="@id/dishImage" />
+
+            <TextView
+                android:id="@+id/dishDescriptionText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="Dish text"
+                android:padding="16dp"
+                android:textColor="@color/text"
+                android:visibility="invisible"
+                app:layout_constraintTop_toBottomOf="@id/dishNameText"
+                app:layout_constraintStart_toStartOf="@id/menuScrollView"
+                app:layout_constraintEnd_toStartOf="@id/dishImage" />
+
+            <TextView
+                android:id="@+id/dishPriceText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="Dish price"
+                android:padding="16dp"
+                android:textColor="@color/text"
+                android:visibility="invisible"
+                app:layout_constraintTop_toBottomOf="@id/dishDescriptionText"
+                app:layout_constraintStart_toStartOf="@id/menuScrollView"
+                app:layout_constraintEnd_toStartOf="@id/dishImage" />
+
+            <TextView
+                android:id="@+id/dishAllergensText1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Contains: "
+                android:paddingStart="16dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:textColor="@color/text"
+                android:visibility="invisible"
+                app:layout_constraintTop_toBottomOf="@id/dishPriceText"
+                app:layout_constraintStart_toStartOf="@id/menuScrollView"
+                app:layout_constraintEnd_toStartOf="@id/dishAllergensText" />
+            <TextView
+                android:id="@+id/dishAllergensText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="Dish allergens"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:paddingEnd="16dp"
+                android:textColor="@color/text"
+                android:visibility="invisible"
+                app:layout_constraintTop_toBottomOf="@id/dishPriceText"
+                app:layout_constraintStart_toEndOf="@id/dishAllergensText1"
+                app:layout_constraintEnd_toStartOf="@id/dishImage" />
+
+            <ImageView
+                android:id="@+id/dishImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/image_shape"
+                android:src="@drawable/cropped_bowl"
+                android:clipToOutline="true"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="@id/menuScrollView"
+                app:layout_constraintTop_toTopOf="@id/dishNameText" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

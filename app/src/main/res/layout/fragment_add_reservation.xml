@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MenuFragment"
+    android:background="#4C6444">
+
+    <TextView
+        android:id="@+id/addResTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="Reservations"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="@color/title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        style="@style/backButton"
+        android:id="@+id/back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/infoText"/>
+
+    <TextView
+        android:id="@+id/infoText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/textview_border"
+        android:layout_margin="16dp"
+        android:padding="20dp"
+        app:layout_constraintTop_toBottomOf="@id/addResTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/reserveButton"/>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:scrollbars="none"
+        app:layout_constraintTop_toTopOf="@id/infoText"
+        app:layout_constraintBottom_toBottomOf="@id/infoText"
+        app:layout_constraintStart_toStartOf="@id/infoText"
+        app:layout_constraintEnd_toEndOf="@id/infoText">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/makeReservationText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="Make a Reservation:"
+                android:textColor="@color/text"
+                app:layout_constraintTop_toTopOf="@id/container"
+                app:layout_constraintStart_toStartOf="@id/container" />
+
+            <TextView
+                android:id="@+id/selectTimeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="Select Time:"
+                android:textColor="@color/text"
+                app:layout_constraintStart_toStartOf="@id/container"
+                app:layout_constraintTop_toBottomOf="@id/makeReservationText" />
+
+            <Spinner
+                android:id="@+id/selectTimeList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/textview_border"
+                android:hint="Spinner Here"
+                android:textColor="@color/text"
+                app:layout_constraintTop_toBottomOf="@id/selectTimeText"
+                app:layout_constraintStart_toStartOf="@id/container"
+                app:layout_constraintEnd_toEndOf="@id/container"/>
+
+            <TextView
+                android:id="@+id/selectGuestsText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingTop="20dp"
+                android:text="Select No. Guests:"
+                android:textColor="@color/text"
+                app:layout_constraintTop_toBottomOf="@id/selectTimeList"
+                app:layout_constraintStart_toStartOf="@id/container" />
+
+            <Spinner
+                android:id="@+id/selectGuestsList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/textview_border"
+                android:text="Spinner Here"
+                android:textColor="@color/text"
+                app:layout_constraintTop_toBottomOf="@id/selectGuestsText"
+                app:layout_constraintStart_toStartOf="@id/container"
+                app:layout_constraintEnd_toEndOf="@id/container"/>
+
+            <TextView
+                android:id="@+id/selectDateText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingTop="16dp"
+                android:text="Select Date:"
+                android:textColor="@color/text"
+                app:layout_constraintTop_toBottomOf="@id/selectGuestsList"
+                app:layout_constraintStart_toStartOf="@id/container" />
+
+            <CalendarView
+                android:id="@+id/calendar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/selectDateText"
+                app:layout_constraintStart_toStartOf="@id/container"
+                app:layout_constraintEnd_toEndOf="@id/container" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/reserveButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="36dp"
+        android:text="Create Reservation"
+        style="@style/buttons"
+        app:layout_constraintTop_toBottomOf="@id/scrollView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/infoText"
+        app:layout_constraintEnd_toEndOf="@id/infoText" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
