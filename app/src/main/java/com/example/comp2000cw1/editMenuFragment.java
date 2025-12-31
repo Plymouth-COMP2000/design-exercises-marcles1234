@@ -67,7 +67,7 @@ public class editMenuFragment extends Fragment {
         //TYPE SPINNER
         editDishType = view.findViewById(R.id.dishType);
         String currentTime = (itemData).getDishType();
-        String[] categories = {"Starter", "Pasta", "Pizza", "Soup", "Sides"};
+        String[] categories = {"Starter", "Pasta", "Pizza", "Sides", "Dessert"};
         for (int i = 0; i < categories.length; i++) {
             if (categories[i].equals(currentTime)) {
                 int temp = i;

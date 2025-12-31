@@ -85,14 +85,14 @@
                 android:text="Pizza" />
 
             <Button
-                android:id="@+id/soupButton"
-                style="@style/buttonformat"
-                android:text="Soup" />
-
-            <Button
                 android:id="@+id/sidesButton"
                 style="@style/buttonformat"
                 android:text="Sides" />
+
+            <Button
+                android:id="@+id/soupButton"
+                style="@style/buttonformat"
+                android:text="Dessert" />
 
         </LinearLayout>
 

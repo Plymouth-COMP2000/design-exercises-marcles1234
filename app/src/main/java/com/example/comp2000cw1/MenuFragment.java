@@ -111,10 +111,10 @@ public class MenuFragment extends Fragment {
                 category = "Pasta";
             } else if (v.getId() == R.id.pizzaButton) {
                 category = "Pizza";
-            } else if (v.getId() == R.id.soupButton) {
-                category = "Soup";
             } else if (v.getId() == R.id.sidesButton) {
                 category = "Sides";
+            } else if (v.getId() == R.id.soupButton) {
+                category = "Dessert";
             } else {
                 category = "";
             }

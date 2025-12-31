@@ -27,7 +27,7 @@
         android:layout_margin="16dp"
         android:background="@drawable/textview_border"
         android:padding="20dp"
-        android:text="This is the Home Fragment. Insert random text here and this will continue for a while untill the room runs out blahblahblah I am just trying to fill save dosifoiofiasfoidso"
+        android:text="This is the Home Fragment"
         android:autoSizeTextType="uniform"
         android:autoSizeMinTextSize="12sp"
         android:autoSizeMaxTextSize="24sp"

@@ -36,7 +36,7 @@ public class AddMenuFragment extends Fragment {
 
         //TYPE SPINNER
         editDishType = root.findViewById(R.id.dishType);
-        String[] categories = {"Starter", "Pasta", "Pizza", "Soup", "Sides"};
+        String[] categories = {"Starter", "Pasta", "Pizza", "Sides", "Dessert"};
         ArrayAdapter<String> timeAdapter = new ArrayAdapter<>(
                 requireContext(),
                 R.layout.spinner_template,

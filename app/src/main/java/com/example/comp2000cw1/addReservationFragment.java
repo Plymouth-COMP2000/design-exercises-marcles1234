@@ -60,7 +60,11 @@ public class addReservationFragment extends Fragment {
         //CALENDAR
         calendar = root.findViewById(R.id.calendar);
         calendar.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
-            selectedDate = dayOfMonth + "/" + (month + 1) + "/" + year;
+            selectedDate = String.format("%02d/%02d/%04d",
+                    dayOfMonth,
+                    month + 1,
+                    year
+            );
         });
 
         //SHARED PREFS
